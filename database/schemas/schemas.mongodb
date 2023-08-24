@@ -1,0 +1,83 @@
+/**
+ * ! CREANDO LOS ESQUEMAS DE LA BASE DE DATOS:
+ */
+
+use("rappi_prueba");
+db.createCollection("usuarios", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "nombre", "direccion", "telefono", "correo", "contrasena", "tipo_usuario"],
+            properties: {
+                _id: { bsonType: 'objectId' },
+                id: { bsonType: "int", description: "id is required" },
+                nombre: { bsonType: "string", description: "nombre is required" },
+                direccion: { bsonType: "string", description: "direccion is required" },
+                telefono: { bsonType: "string", description: "telefono is required" },
+                correo: { bsonType: "string", description: "correo is required" },
+                contrasena: { bsonType: "string", description: "contrasena is required" },
+                tipo_usuario: { bsonType: "string", enum: ["cliente", "repartidor", "administrador"], description: "tipo_usuario is required" },
+                vehiculo: { bsonType: "string", description: "vehiculo is a string" },
+                estado: { bsonType: "string", enum: ["disponible", "ocupado", "desconectado"], description: "estado is a string" }
+            }
+        }
+    }
+});
+
+db.createCollection("productos", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "nombre_producto", "descripcion", "precio", "categoria", "disponibilidad"],
+            properties: {
+                _id: { bsonType: 'objectId' },
+                id: { bsonType: "int", description: "id is required" },
+                nombre_producto: { bsonType: "string", description: "nombre_producto is required" },
+                descripcion: { bsonType: "string", description: "descripcion is required" },
+                precio: { bsonType: "decimal", description: "precio is required" },
+                categoria: { bsonType: "string", enum: ["licores", "farmacos", "comida_rapida", "canasta_domestica"], description: "categoria is required" },
+                disponibilidad: { bsonType: "bool", description: "disponibilidad is required" }
+            }
+        }
+    }
+});
+
+db.createCollection("ordenes", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "user_id", "cart_id", "fecha_hora", "direccion_entrega", "estado", "total", "repartidor_id"],
+            properties: {
+                _id: { bsonType: 'objectId' },
+                id: { bsonType: "int", description: "id is required" },
+                cart_id: { bsonType: "int", description: "cart_id is required" },
+                user_id: { bsonType: "int", description: "user_id is required" },
+                fecha_hora: { bsonType: "date", description: "fecha_hora is required" },
+                direccion_entrega: { bsonType: "string", description: "direccion_entrega is required" },
+                estado: { bsonType: "string", enum: ["pendiente", "en_proceso", "entregada", "cancelada"], description: "estado is required" },
+                detalles_pago: { bsonType: "string", description: "detalles_pago is required" },
+                total: { bsonType: "decimal", description: "total is required" },
+                repartidor_id: { bsonType: "int", description: "repartidor_id is required" }
+            }
+        }
+    }
+});
+
+db.createCollection("carrito", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "user_id", "content_cart"],
+            properties: {
+                _id: { bsonType: 'objectId' },
+                id: { bsonType: "int", description: "id is required" },
+                user_id: { bsonType: "int", description: "user_id is required" },
+                content_cart: { bsonType: "array", description: "content_cart is required" }
+            }
+        }
+    }
+});

@@ -1,0 +1,57 @@
+/**
+ * ! DEFINICION DE AUTOINCREMENTABLES:
+ */
+
+use("rappi_prueba");
+db.createCollection("counters");
+db.counters.insertMany([
+    { id: "usuarioId", sequence_value: 0 },
+    { id: "productoId", sequence_value: 0 },
+    { id: "ordenId", sequence_value: 0 },
+    { id: "carritoId", sequence_value: 0 }
+]);
+
+function siguienteId(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+};
+
+/**
+ * ! INSERTS DE PRUEBA:
+ */
+
+use("rappi_prueba");
+function siguienteId(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+};
+db.carrito.insertMany([
+    {
+        id: Number(siguienteId("carrito")),
+        user_id: 2,
+        content_cart: [],
+    },
+    {
+        id: Number(siguienteId("carrito")),
+        user_id: 2,
+        content_cart: [],
+    },
+    {
+        id: Number(siguienteId("carrito")),
+        user_id: 2,
+        content_cart: [],
+    },
+    {
+        id: Number(siguienteId("carrito")),
+        user_id: 2,
+        content_cart: [],
+    }
+]);
