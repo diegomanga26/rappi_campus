@@ -11,7 +11,7 @@ db.counters.insertMany([
     { id: "carritoId", sequence_value: 0 }
 ]);
 
-function siguienteId(coleccion) {
+export function siguienteId(coleccion) {
     const sequenceDocument = db.counters.findOneAndUpdate(
         { id: `${coleccion}Id` },
         { $inc: { sequence_value: 1 } },
