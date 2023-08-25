@@ -59,7 +59,7 @@ db.createCollection("ordenes", {
                 direccion_entrega: { bsonType: "string", description: "direccion_entrega is required" },
                 estado: { bsonType: "string", enum: ["pendiente", "en_proceso", "entregada", "cancelada"], description: "estado is required" },
                 detalles_pago: { bsonType: "string", description: "detalles_pago is required" },
-                total: { bsonType: "decimal", description: "total is required" },
+                total: { bsonType: "double", description: "total is required" },
                 repartidor_id: { bsonType: "int", description: "repartidor_id is required" }
             }
         }
