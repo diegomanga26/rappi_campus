@@ -5,3 +5,5 @@ import { getAllProducts } from "../versions/product_admin_version/product_action
 export const products = Router();
 
 products.get("/", getAllProducts);
+
+products.post('/',)
