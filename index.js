@@ -8,8 +8,9 @@ import routesVersioning from "express-routes-versioning";
 import { limitGrt } from "./config/limiter.js"; // Importación de función de limitación genérica de peticiones
 import { register } from "./routes/doorAuth.routes.js"; // Importación de ruta de registro
 import { login } from "./routes/doorAuth.routes.js"; // Importación de ruta de inicio de sesión
+import { products } from "./routes/products.routes.js";
 
-// Configuración del entorno
+// Configuración del entorn.o
 dotenv.config();
 
 // Inicialización del servidor Express
@@ -26,8 +27,9 @@ index.use(limitGrt()); // Aplica la función de limitación genérica de peticio
 index.use(passport.initialize()); // Inicializa Passport para autenticación
 
 // Rutas
-index.use('/register', limitLogin(), register); // Ruta para el registro, con limitación de tasa
-index.use('/login', limitLogin(), login); // Ruta para el inicio de sesión, con limitación de tasa
+index.use("/register", limitLogin(), register); // Ruta para el registro, con limitación de tasa
+index.use("/login", limitLogin(), login); // Ruta para el inicio de sesión, con limitación de tasa
+index.use("/productos", products);
 
 // Inicio del servidor
 index.listen(index.get("port"), () => {

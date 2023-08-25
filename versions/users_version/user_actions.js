@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import { con } from "../../config/atlas.js";
 
 // Función asincrónica para obtener el siguiente ID de una colección
-async function siguienteId(coleccion) {
+export async function siguienteId(coleccion) {
   const db = await con();
   const sequenceDocument = await db.collection("counters").findOneAndUpdate(
     { id: `${coleccion}Id` },
