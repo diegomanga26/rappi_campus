@@ -36,7 +36,7 @@ db.createCollection("productos", {
                 id: { bsonType: "int", description: "id is required" },
                 nombre_producto: { bsonType: "string", description: "nombre_producto is required" },
                 descripcion: { bsonType: "string", description: "descripcion is required" },
-                precio: { bsonType: "decimal", description: "precio is required" },
+                precio: { bsonType: "double", description: "precio is required" },
                 categoria: { bsonType: "string", enum: ["licores", "farmacos", "comida_rapida", "canasta_domestica"], description: "categoria is required" },
                 disponibilidad: { bsonType: "bool", description: "disponibilidad is required" }
             }

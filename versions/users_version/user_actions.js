@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import { con } from "../../config/atlas.js";
+import { CURSOR_FLAGS } from "mongodb";
 
 // Función asincrónica para obtener el siguiente ID de una colección
 export async function siguienteId(coleccion) {

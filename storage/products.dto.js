@@ -16,3 +16,11 @@ export const productsDto = [
     }), // Validación de no vacío y tipo booleano personalizado
 ];
 
+export const productsDtoUpdate = [
+  check("name").isString().optional(), 
+  check("description").notEmpty().isString().optional(), 
+  check("price").notEmpty().isDecimal().optional(), 
+  check("category").notEmpty().isString().optional(), 
+
+];
+
