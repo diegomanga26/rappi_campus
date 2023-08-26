@@ -8,20 +8,37 @@ import { con } from "../../config/atlas.js";
  * @returns {Object} El objeto transformado.
  */
 function transformObject(inputObject) {
-  const keyMapping = {
-    'name': 'nombre_producto',
-    'description': 'descripcion',
-    'price': 'precio',
-    'category': 'categoria',
-    'availability': 'disponibilidad',
-  };
-
   const transformedObject = {};
+
   for (const key in inputObject) {
-    transformedObject[keyMapping[key] || key] = inputObject[key];
+    let transformedKey;
+
+    switch (key) {
+      case 'name':
+        transformedKey = 'nombre_producto';
+        break;
+      case 'description':
+        transformedKey = 'descripcion';
+        break;
+      case 'price':
+        transformedKey = 'precio';
+        break;
+      case 'category':
+        transformedKey = 'categoria';
+        break;
+      case 'availability':
+        transformedKey = 'disponibilidad';
+        break;
+      default:
+        transformedKey = key;
+    }
+
+    transformedObject[transformedKey] = inputObject[key];
   }
+
   return transformedObject;
 }
+
 
 /**
  * Obtiene todos los productos.

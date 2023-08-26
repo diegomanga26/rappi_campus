@@ -63,7 +63,7 @@ export async function loginUsuario(req, res) {
   try {
     const db = await con();
     const user = await db.collection("usuario").findOne({ correo: email, contrasena: password });
-    
+
     if (user) {
       res.status(200).json({ message: "success", user });
     } else {
@@ -272,18 +272,8 @@ export async function actualizarOrden(req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const mapper = {
-    id_cart: "cart_id",
-    id_user: "user_id",
-    dateTime: "fecha_hora",
-    adress_to_send: "direccion_entrega",
-    status: "estado",
-    detalles_pago: "detalles_pago",
-    total: "total",
-    id_deliver: "repartidor_id",
-  };
 
-  const json = transformObject(req.body, mapper);
+  const json = transformObject(req.body);
   const _id = req.params.id;
   const id = parseInt(_id);
   const filter = { id };
@@ -309,18 +299,7 @@ export async function crearOrden(req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const mapper = {
-    id_cart: "cart_id",
-    id_user: "user_id",
-    dateTime: "fecha_hora",
-    adress_to_send: "direccion_entrega",
-    status: "estado",
-    detalles_pago: "detalles_pago",
-    total: "total",
-    id_deliver: "repartidor_id",
-  };
-
-  const json = transformObject(req.body, mapper);
+  const json = transformObject(req.body);
 
   try {
     const db = await con();
@@ -335,13 +314,77 @@ export async function crearOrden(req, res) {
   }
 }
 
-// Función para transformar las claves de un objeto
-function transformObject(inputObject, keyMap) {
+
+/**
+ * Transforma un objeto de entrada aplicando un mapeo de claves y devuelve un objeto transformado.
+ * @param {Object} inputObject - Objeto de entrada a transformar.
+ * @returns {Object} Objeto transformado.
+ */
+function transformObject(inputObject) {
   const transformedObject = {};
+
   for (const key in inputObject) {
     if (inputObject.hasOwnProperty(key)) {
-      transformedObject[keyMap[key] || key] = inputObject[key];
+      let transformedKey = key;
+
+      // Aplicar mapeo de claves
+      if (key === 'id_cart') {
+        transformedKey = 'cart_id';
+      } else if (key === 'id_user') {
+        transformedKey = 'user_id';
+      } else if (key === 'dateTime') {
+        transformedKey = 'fecha_hora';
+      } else if (key === 'adress_to_send') {
+        transformedKey = 'direccion_entrega';
+      } else if (key === 'status') {
+        transformedKey = 'estado';
+      } else if (key === 'detalles_pago') {
+        transformedKey = 'detalles_pago';
+      } else if (key === 'total') {
+        transformedKey = 'total';
+      } else if (key === 'id_deliver') {
+        transformedKey = 'repartidor_id';
+      }
+
+      transformedObject[transformedKey] = inputObject[key];
     }
   }
+
+  return transformedObject;
+}
+
+/**
+ * Transforma un objeto de usuario de entrada y devuelve un objeto transformado.
+ * @param {Object} inputObject - Objeto de usuario de entrada a transformar.
+ * @returns {Object} Objeto de usuario transformado.
+ */
+function transformObjectUser(inputObject) {
+  const transformedObject = {};
+
+  for (const key in inputObject) {
+    if (inputObject.hasOwnProperty(key)) {
+      let transformedKey;
+
+      // Aplicar mapeo de claves
+      if (key === 'name') {
+        transformedKey = 'nombre';
+      } else if (key === 'email') {
+        transformedKey = 'correo';
+      } else if (key === 'password') {
+        transformedKey = 'contrasena';
+      } else if (key === 'numCelular') {
+        transformedKey = 'telefono';
+      } else if (key === 'address') {
+        transformedKey = 'direccion';
+      } else if (key === 'user_type') {
+        transformedKey = 'tipo_usuario';
+      } else {
+        transformedKey = key;
+      }
+
+      transformedObject[transformedKey] = inputObject[key];
+    }
+  }
+
   return transformedObject;
 }
