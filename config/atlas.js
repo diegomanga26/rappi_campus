@@ -4,7 +4,10 @@ import dotenv from "dotenv";
 // Configuración del archivo .env
 dotenv.config({ path: "../" });
 
-// Función asincrónica para establecer una conexión con la base de datos
+/**
+ * Establece una conexión asincrónica con la base de datos.
+ * @returns {Promise<Db>} Instancia de la base de datos conectada.
+ */
 export async function con() {
   try {
     const uri = process.env.ATLAS_STRCONNECT; // Obtiene la cadena de conexión desde el archivo .env

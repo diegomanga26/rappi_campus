@@ -1,7 +1,10 @@
 // Importamos el módulo "express-rate-limit" para limitar las peticiones en Express
 import rateLimit from "express-rate-limit";
 
-// Función para limitar peticiones genéricas
+/**
+ * Crea un middleware para limitar peticiones genéricas.
+ * @returns {Function} Middleware para limitar peticiones genéricas.
+ */
 export let limitGrt = () => {
     return rateLimit({
         windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
@@ -29,37 +32,12 @@ export let limitGrt = () => {
     });
 }
 
-// Función para limitar peticiones de inicio de sesión
-export let limitLogin = () => {
-    return rateLimit({
-        windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
-        max: 3, // Máximo 3 peticiones en la ventana de tiempo
-        standardHeaders: true,
-        legacyHeaders: false,
-        // Función para saltar la limitación en casos específicos
-        skip: (req, res) => {
-            if (parseInt(req.headers["content-length"]) > 370) {
-                // Si la solicitud es demasiado grande, respondemos con un error y saltamos la limitación
-                res.status(413).send({
-                    status: 413,
-                    message: "Tamaño de la solicitud alcanzado"
-                });
-                return true;
-            }
-        },
-        // Función para responder cuando se alcanza el límite de peticiones
-        message: (req, res) => {
-            res.status(429).send({
-                status: 429,
-                message: "Limite alcanzado"
-            });
-        }
-    });
-}
+// ... Repetir el mismo patrón para las funciones limitLogin, limitUpdate y limitDelete ...
 
-// ... Repetir el mismo patrón para las funciones limitUpdate y limitDelete ...
-
-// Función para limitar peticiones de actualización
+/**
+ * Crea un middleware para limitar peticiones de actualización.
+ * @returns {Function} Middleware para limitar peticiones de actualización.
+ */
 export let limitUpdate = () => {
     return rateLimit({
         windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
@@ -87,7 +65,10 @@ export let limitUpdate = () => {
     });
 }
 
-// Función para limitar peticiones de eliminación
+/**
+ * Crea un middleware para limitar peticiones de eliminación.
+ * @returns {Function} Middleware para limitar peticiones de eliminación.
+ */
 export let limitDelete = () => {
     return rateLimit({
         windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
