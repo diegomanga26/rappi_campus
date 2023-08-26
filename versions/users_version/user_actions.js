@@ -364,3 +364,57 @@ export async function actualizarOrden(req, res) {
   }
 }
 
+
+// Esta función crea una nueva orden y selecciona un repartidor aleatorio del tipo de usuario "repartidor".
+export async function crearOrden(req, res) {
+  // Valida los errores de la solicitud utilizando express-validator
+  const errors = validationResult(req);
+
+  // Si hay errores de validación, responde con un estado 400 y la lista de errores en formato JSON
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  // Mapeo de las claves del objeto en el cuerpo de la solicitud a las claves en la base de datos
+  let mapper = {
+    "id_cart": "cart_id",
+    "id_user": "user_id",
+    "dateTime": "fecha_hora",
+    "adress_to_send": "direccion_entrega",
+    "status": "estado",
+    "detalles_pago": "detalles_pago",
+    "total": "total",
+    "id_deliver": "repartidor_id"
+  };
+
+
+  // Transformar las claves del objeto en el cuerpo de la solicitud utilizando la función transformObject
+  const json = transformObject(req.body, mapper);
+
+  try {
+    // Establecer una conexión a la base de datos
+    const db = await con();
+
+    // Obtener la lista de usuarios con el tipo de usuario "repartidor"
+    const repartidores = await db.collection("usuario").find({ tipo_usuario: "repartidor" }).toArray();
+
+    // Elegir un repartidor aleatorio de la lista
+    const repartidorAleatorio = repartidores[Math.floor(Math.random() * repartidores.length)];
+
+    // Agregar el ID del repartidor seleccionado al objeto JSON
+    json.id_deliver = repartidorAleatorio.id;
+
+    // Insertar la nueva orden en la colección "orden" utilizando la función insertOne
+    const result = await db.collection("orden").insertOne(json);
+
+    // Responder con un estado 201 (creado) y el resultado de la inserción en formato JSON
+    res.status(201).json(result);
+  } catch (error) {
+    // Si ocurre un error durante el proceso, registrar el error en la consola
+    console.log(error, "error");
+
+    // Responder con un estado 500 (error interno del servidor) y un mensaje de error
+    res.status(500).send("error");
+  }
+}
+

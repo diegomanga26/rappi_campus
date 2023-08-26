@@ -5,6 +5,7 @@ import { siguienteId } from "../users_version/user_actions.js";
 import { con } from "../../config/atlas.js";
 
 // Función para transformar las claves de un objeto
+/**@param {*} inputObject  */
 function transformObject(inputObject) {
   // Definimos un mapeo de claves entre las claves originales y las nuevas claves deseadas
   const keyMapping = {
@@ -29,7 +30,6 @@ function transformObject(inputObject) {
   // Devolvemos el objeto transformado con las nuevas claves
   return transformedObject;
 }
-
 
 // Función para obtener todos los productos
 export async function getAllProducts(req, res) {
@@ -94,8 +94,7 @@ export async function deleteProducto(req, res) {
   if (!req.rateLimit) return; // Si no se excede el límite de tasa, no se procede
 
   const errors = validationResult(req); // Validar errores en la solicitud
-  if (!errors.isEmpty())
-    return res.status(400).json({ errors: errors.array() }); // Si hay errores, responder con 400
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() }); // Si hay errores, responder con 400
 
   const _id = req.params.id; // Obtenemos el ID del producto de los parámetros de la URL
   let id = parseInt(_id); // Convertimos el ID a entero
