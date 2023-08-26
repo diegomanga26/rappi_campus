@@ -116,16 +116,7 @@ export async function actualizarUsuario(req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const keyMapping = {
-    name: "nombre",
-    email: "correo",
-    password: "contrasena",
-    numCelular: "telefono",
-    address: "direccion",
-    user_type: "tipo_usuario",
-  };
-
-  const json = transformObject(req.body, keyMapping);
+  const json = transformObjectUser(req.body);
   const _id = req.params.id;
   const id = parseInt(_id);
   const filter = { id };
@@ -327,7 +318,6 @@ function transformObject(inputObject) {
     if (inputObject.hasOwnProperty(key)) {
       let transformedKey = key;
 
-      // Aplicar mapeo de claves
       if (key === 'id_cart') {
         transformedKey = 'cart_id';
       } else if (key === 'id_user') {

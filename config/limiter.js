@@ -32,7 +32,36 @@ export let limitGrt = () => {
     });
 }
 
-// ... Repetir el mismo patrón para las funciones limitLogin, limitUpdate y limitDelete ...
+/**
+ * Crea un middleware para limitar peticiones de inicio de sesión.
+ * @returns {Function} Middleware para limitar peticiones de inicio de sesión.
+ */
+export let limitLogin = () => {
+    return rateLimit({
+        windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
+        max: 3, // Máximo 3 peticiones en la ventana de tiempo
+        standardHeaders: true,
+        legacyHeaders: false,
+        // Función para saltar la limitación en casos específicos
+        skip: (req, res) => {
+            if (parseInt(req.headers["content-length"]) > 370) {
+                // Si la solicitud es demasiado grande, respondemos con un error y saltamos la limitación
+                res.status(413).send({
+                    status: 413,
+                    message: "Tamaño de la solicitud alcanzado"
+                });
+                return true;
+            }
+        },
+        // Función para responder cuando se alcanza el límite de peticiones
+        message: (req, res) => {
+            res.status(429).send({
+                status: 429,
+                message: "Limite alcanzado"
+            });
+        }
+    });
+}
 
 /**
  * Crea un middleware para limitar peticiones de actualización.
