@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.99% </span>
+                <span class="strong">24.28% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>89/387</span>
+                <span class='fraction'>94/387</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">27.27% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>3/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.99% </span>
+                <span class="strong">24.28% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>89/387</span>
+                <span class='fraction'>94/387</span>
             </div>
         
             
@@ -476,6 +476,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -495,8 +496,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -504,6 +504,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -523,13 +524,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -862,8 +862,8 @@ export async function siguienteId(coleccion) {
  * @param {Object} req - La solicitud HTTP.
  * @param {Object} res - La respuesta HTTP.
  */
-export <span class="fstat-no" title="function not covered" >async function registerUsuario(req, res) {</span>
-<span class="cstat-no" title="statement not covered" >  if (!req.rateLimit) return;</span>
+export async function registerUsuario(req, res) {
+  if (!req.rateLimit) <span class="branch-0 cbranch-no" title="branch not covered" >return;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  const errors = validationResult(req);</span>
 <span class="cstat-no" title="statement not covered" >  if (!errors.isEmpty()) {</span>
@@ -883,15 +883,15 @@ export <span class="fstat-no" title="function not covered" >async function regis
 <span class="cstat-no" title="statement not covered" >    console.error(error);</span>
 <span class="cstat-no" title="statement not covered" >    res.status(500).send("error");</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;
 /**
  * Inicia sesión de un usuario.
  * @param {Object} req - La solicitud HTTP.
  * @param {Object} res - La respuesta HTTP.
  */
-export <span class="fstat-no" title="function not covered" >async function loginUsuario(req, res) {</span>
-<span class="cstat-no" title="statement not covered" >  if (!req.rateLimit) return;</span>
+export async function loginUsuario(req, res) {
+  if (!req.rateLimit) <span class="branch-0 cbranch-no" title="branch not covered" >return;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  const errors = validationResult(req);</span>
 <span class="cstat-no" title="statement not covered" >  if (!errors.isEmpty()) {</span>
@@ -911,12 +911,12 @@ export <span class="fstat-no" title="function not covered" >async function login
 <span class="cstat-no" title="statement not covered" >      res.status(404).json({ message: "user not found" });</span>
 <span class="cstat-no" title="statement not covered" >      return {message: "user not found"};</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
+  } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    console.error(error);</span>
 <span class="cstat-no" title="statement not covered" >    res.status(500).send("error");</span>
 <span class="cstat-no" title="statement not covered" >    return {message: "error", error};</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;
 /**
  * Obtiene información de un usuario según su ID.
@@ -1231,7 +1231,7 @@ export <span class="fstat-no" title="function not covered" >function transformOb
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-29T02:03:20.551Z
+                at 2023-08-29T02:26:07.298Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

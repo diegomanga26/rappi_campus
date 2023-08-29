@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1693274600564" clover="3.2.0">
-  <project timestamp="1693274600565" name="All files">
-    <metrics statements="588" coveredstatements="162" conditionals="3" coveredconditionals="2" methods="19" coveredmethods="2" elements="610" coveredelements="166" complexity="0" loc="588" ncloc="588" packages="3" files="3" classes="3"/>
+<coverage generated="1693275967310" clover="3.2.0">
+  <project timestamp="1693275967310" name="All files">
+    <metrics statements="588" coveredstatements="167" conditionals="8" coveredconditionals="4" methods="19" coveredmethods="4" elements="615" coveredelements="175" complexity="0" loc="588" ncloc="588" packages="3" files="3" classes="3"/>
     <package name="config">
       <metrics statements="19" coveredstatements="17" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
       <file name="atlas.js" path="/home/arteT01-098/Desktop/rappi_campus/config/atlas.js">
@@ -216,9 +216,9 @@
       </file>
     </package>
     <package name="versions.users_version">
-      <metrics statements="387" coveredstatements="89" conditionals="1" coveredconditionals="1" methods="11" coveredmethods="1"/>
+      <metrics statements="387" coveredstatements="94" conditionals="6" coveredconditionals="3" methods="11" coveredmethods="3"/>
       <file name="user_actions.js" path="/home/arteT01-098/Desktop/rappi_campus/versions/users_version/user_actions.js">
-        <metrics statements="387" coveredstatements="89" conditionals="1" coveredconditionals="1" methods="11" coveredmethods="1"/>
+        <metrics statements="387" coveredstatements="94" conditionals="6" coveredconditionals="3" methods="11" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -244,8 +244,8 @@
         <line num="23" count="1" type="stmt"/>
         <line num="24" count="1" type="stmt"/>
         <line num="25" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
+        <line num="26" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="27" count="3" type="cond" truecount="0" falsecount="1"/>
         <line num="28" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
@@ -265,15 +265,15 @@
         <line num="44" count="0" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
+        <line num="47" count="3" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
         <line num="50" count="1" type="stmt"/>
         <line num="51" count="1" type="stmt"/>
         <line num="52" count="1" type="stmt"/>
         <line num="53" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
+        <line num="54" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="55" count="2" type="cond" truecount="0" falsecount="1"/>
         <line num="56" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
         <line num="58" count="0" type="stmt"/>
@@ -293,12 +293,12 @@
         <line num="72" count="0" type="stmt"/>
         <line num="73" count="0" type="stmt"/>
         <line num="74" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
+        <line num="75" count="2" type="cond" truecount="0" falsecount="1"/>
         <line num="76" count="0" type="stmt"/>
         <line num="77" count="0" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
         <line num="79" count="0" type="stmt"/>
-        <line num="80" count="0" type="stmt"/>
+        <line num="80" count="2" type="stmt"/>
         <line num="81" count="1" type="stmt"/>
         <line num="82" count="1" type="stmt"/>
         <line num="83" count="1" type="stmt"/>

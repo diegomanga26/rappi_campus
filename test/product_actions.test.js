@@ -7,7 +7,7 @@ import { siguienteId } from "../versions/users_version/user_actions.js";
 
 // Funciones para testear `getAllProducts()`
 it("Devuelve todos los productos", async () => {
-  const errors = validationResult();
+  const errors = validationResult;
   if (!errors.isEmpty()) {
     console.log(errors.array());
   }

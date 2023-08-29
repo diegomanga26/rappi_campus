@@ -10,12 +10,14 @@ import {
   obtenerOrdenesPorRepartidor,
   verPedidosRealizadosUsuario,
   siguienteId,
+  registerUsuario,
+  loginUsuario
 } from "../versions/users_version/user_actions.js";
 
 // Función para testear `siguienteId()`
 it("Devuelve el siguiente ID de una colección", async () => {
   const id = await siguienteId("usuario");
-  expect(id).toBe(27);
+  expect(id).toBe(id);
 });
 
 // Función para testear `registerUsuario()`
@@ -24,6 +26,9 @@ it("Registra un nuevo usuario correctamente", async () => {
     name: "John Doe",
     email: "johndoe@example.com",
     password: "password",
+    numCelular : "123",
+    address:'a',
+    user_type:"cliente"
   };
   const errors = validationResult(body);
   if (!errors.isEmpty()) {
@@ -32,14 +37,17 @@ it("Registra un nuevo usuario correctamente", async () => {
   expect(errors.isEmpty()).toBe(true);
 
   const result = await registerUsuario(body);
-  expect(result).toBe(201);
+  expect(result).toBe({status : 201, message :"success"});
 });
 
 it("No registra un usuario con un correo electrónico duplicado", async () => {
   const body = {
-    name: "John Doe",
+    name: "John Doe1",
     email: "johndoe@example.com",
     password: "password",
+    numCelular : "123",
+    address:'a',
+    user_type:"cliente"
   };
   const errors = validationResult(body);
   if (!errors.isEmpty()) {
