@@ -3,7 +3,7 @@
  */
 
 use("rappi_prueba");
-db.createCollection("usuarios", {
+db.createCollection("usuario", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
@@ -25,7 +25,7 @@ db.createCollection("usuarios", {
     }
 });
 
-db.createCollection("productos", {
+db.createCollection("producto", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
@@ -44,7 +44,7 @@ db.createCollection("productos", {
     }
 });
 
-db.createCollection("ordenes", {
+db.createCollection("orden", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
