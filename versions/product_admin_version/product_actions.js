@@ -9,7 +9,7 @@ import { con } from "../../config/atlas.js";
  * @param {Object} inputObject - Objeto de entrada a transformar.
  * @returns {Object} Objeto transformado.
  */
-function transformObject(inputObject) {
+export function transformObject(inputObject) {
   const transformedObject = {};
 
   for (const key in inputObject) {

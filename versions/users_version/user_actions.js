@@ -39,6 +39,7 @@ export async function registerUsuario(req, res) {
     const db = await con();
     await db.collection("usuario").insertOne(newUser);
     res.status(201).send("success");
+    return {status : 201, message :"success"};
   } catch (error) {
     console.error(error);
     res.status(500).send("error");
@@ -66,12 +67,15 @@ export async function loginUsuario(req, res) {
 
     if (user) {
       res.status(200).json({ message: "success", user });
+      return {message: "success",user}
     } else {
       res.status(404).json({ message: "user not found" });
+      return {message: "user not found"};
     }
   } catch (error) {
     console.error(error);
     res.status(500).send("error");
+    return {message: "error", error};
   }
 }
 
@@ -94,12 +98,15 @@ export async function obtenerInfoUsuario(req, res) {
 
     if (user) {
       res.status(200).json({ message: "success", user });
+      return {message: "success",user}
     } else {
       res.status(404).json({ message: "user not found" });
+      return {message: "user not found"};
     }
   } catch (error) {
     console.error(error);
     res.status(500).send("error");
+    return {message: "error", error};
   }
 }
 
@@ -348,7 +355,7 @@ function transformObject(inputObject) {
  * @param {Object} inputObject - Objeto de usuario de entrada a transformar.
  * @returns {Object} Objeto de usuario transformado.
  */
-function transformObjectUser(inputObject) {
+export function transformObjectUser(inputObject) {
   const transformedObject = {};
 
   for (const key in inputObject) {
