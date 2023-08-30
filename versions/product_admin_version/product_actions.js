@@ -82,6 +82,7 @@ export async function createProduct(req, res) {
     const db = await con();
     const result = await db.collection("productos").insertOne(json);
     res.status(200).json(result);
+    return({status:200,message:result})
   } catch (error) {
     console.log(error.errInfo.details.schemaRulesNotSatisfied[0].propertiesNotSatisfied[0], "error");
     res.status(500).send("error");
