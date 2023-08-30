@@ -3,12 +3,13 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import passport from "passport";
-import { limitLogin } from "./config/limiter.js"; // Importación de función de limitación de inicio de sesión
+import { limitLogin } from "./middlewares/limiter.js"; // Importación de función de limitación de inicio de sesión
 import routesVersioning from "express-routes-versioning";
-import { limitGrt } from "./config/limiter.js"; // Importación de función de limitación genérica de peticiones
-import { register } from "./routes/doorAuth.routes.js"; // Importación de ruta de registro
-import { login } from "./routes/doorAuth.routes.js"; // Importación de ruta de inicio de sesión
-import { products } from "./routes/products.routes.js";
+import { limitGrt } from "./middlewares/limiter.js"; // Importación de función de limitación genérica de peticiones
+import { register } from "./routes/doorAuth.js"; // Importación de ruta de registro
+import { login } from "./routes/doorAuth.js"; // Importación de ruta de inicio de sesión
+import { products } from "./routes/producto.js";
+
 
 // Configuración del entorn.o
 dotenv.config();
