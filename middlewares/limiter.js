@@ -1,7 +1,10 @@
 // Importamos el módulo "express-rate-limit" para limitar las peticiones en Express
 import rateLimit from "express-rate-limit";
 
-// Función para limitar peticiones genéricas
+/**
+ * Crea un middleware para limitar peticiones genéricas.
+ * @returns {Function} Middleware para limitar peticiones genéricas.
+ */
 export let limitGrt = () => {
     return rateLimit({
         windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
@@ -29,7 +32,10 @@ export let limitGrt = () => {
     });
 }
 
-// Función para limitar peticiones de inicio de sesión
+/**
+ * Crea un middleware para limitar peticiones de inicio de sesión.
+ * @returns {Function} Middleware para limitar peticiones de inicio de sesión.
+ */
 export let limitLogin = () => {
     return rateLimit({
         windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
@@ -57,9 +63,10 @@ export let limitLogin = () => {
     });
 }
 
-// ... Repetir el mismo patrón para las funciones limitUpdate y limitDelete ...
-
-// Función para limitar peticiones de actualización
+/**
+ * Crea un middleware para limitar peticiones de actualización.
+ * @returns {Function} Middleware para limitar peticiones de actualización.
+ */
 export let limitUpdate = () => {
     return rateLimit({
         windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
@@ -87,7 +94,10 @@ export let limitUpdate = () => {
     });
 }
 
-// Función para limitar peticiones de eliminación
+/**
+ * Crea un middleware para limitar peticiones de eliminación.
+ * @returns {Function} Middleware para limitar peticiones de eliminación.
+ */
 export let limitDelete = () => {
     return rateLimit({
         windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora

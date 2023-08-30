@@ -8,10 +8,11 @@ db.counters.insertMany([
     { id: "usuarioId", sequence_value: 0 },
     { id: "productoId", sequence_value: 0 },
     { id: "ordenId", sequence_value: 0 },
-    { id: "carritoId", sequence_value: 0 }
+    { id: "carritoId", sequence_value: 0 },
+    { id: "rolId", sequence_value: 0 }
 ]);
 
-export function siguienteId(coleccion) {
+function siguienteId(coleccion) {
     const sequenceDocument = db.counters.findOneAndUpdate(
         { id: `${coleccion}Id` },
         { $inc: { sequence_value: 1 } },
@@ -36,7 +37,7 @@ function siguienteId(coleccion) {
 db.carrito.insertMany([
     {
         id: Number(siguienteId("carrito")),
-        user_id: 2,
+        user_id: 1,
         content_cart: [],
     },
     {
@@ -46,12 +47,87 @@ db.carrito.insertMany([
     },
     {
         id: Number(siguienteId("carrito")),
-        user_id: 2,
+        user_id: 3,
         content_cart: [],
     },
     {
         id: Number(siguienteId("carrito")),
-        user_id: 2,
+        user_id: 4,
         content_cart: [],
+    }
+]);
+
+db.rol.insertMany([
+    {       
+        id: Number(siguienteId("rol")), 
+        nombre: "superAdmin", 
+        permisos: {
+            versiones: ["1.0.0", "2.0.0"],
+            colecciones: ["/usuario", "/producto", "/orden", "/carrito"]
+        }
+    },
+    { 
+        id: Number(siguienteId("rol")), 
+        nombre: "admin", 
+        permisos: {
+            versiones: ["1.0.0", "2.0.0"],
+            colecciones: ["/producto", "/orden", "/carrito"]
+        } 
+    },
+    { 
+        id: Number(siguienteId("rol")), 
+        nombre: "repartidor", 
+        permisos: {
+            versiones: ["1.0.0"],
+            colecciones: ["/orden"]
+        } 
+    },
+    { 
+        id: Number(siguienteId("rol")), 
+        nombre: "cliente", 
+        permisos: {
+            versiones: ["1.0.0"],
+            colecciones: ["/producto", "/orden", "/carrito"]
+        } 
+    }
+]);
+
+
+db.usuario.insertMany([
+    {       
+        id: Number(siguienteId("usuario")), 
+        nombre: "SuperRappiAdmin",
+        direccion: "Dirección 1",
+        telefono: "1234567891",
+        correo: "usuario1@example.com",
+        contrasena: "contrasena123",
+        rol: ObjectId("64eea85cbee37c9ddb1d09c0")
+    },
+    { 
+        id: Number(siguienteId("usuario")), 
+        nombre: "RappiAdmin",
+        direccion: "Dirección 2",
+        telefono: "1234567892",
+        correo: "usuario2@example.com",
+        contrasena: "contrasena456",
+        rol: ObjectId("64eea85cbee37c9ddb1d09c1")
+    },
+    { 
+        id: Number(siguienteId("usuario")), 
+        nombre: "RappiTendero",
+        direccion: "Dirección 3",
+        telefono: "1234567893",
+        correo: "usuario3@example.com",
+        contrasena: "contrasena789",
+        rol: ObjectId("64eea85cbee37c9ddb1d09c2")
+    },
+    { 
+        id: Number(siguienteId("usuario")), 
+        nombre: "RappiCliente",
+        direccion: "Dirección 4",
+        telefono: "1234567894",
+        correo: "usuario4@example.com",
+        contrasena: "contrasena012",
+        rol: ObjectId("64eea85cbee37c9ddb1d09c3")
     }
 ]);
