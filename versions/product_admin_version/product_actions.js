@@ -2,7 +2,7 @@
 import { validationResult } from "express-validator";
 // Importamos funciones necesarias de otros archivos
 import { siguienteId } from "../users_version/user_actions.js";
-import { con } from "../../config/atlas.js";
+import { con } from "../../database/config/atlas.js";
 
 /**
  * Transforma las claves de un objeto de usuario aplicando un mapeo predefinido y devuelve un objeto transformado.
