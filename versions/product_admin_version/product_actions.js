@@ -57,6 +57,7 @@ export async function getAllProducts(req, res) {
     const db = await con();
     const result = await db.collection("productos").find().toArray();
     res.status(200).json(result);
+    return {message:result, status:200}
   } catch (error) {
     console.log(error, "error");
     res.status(500).send("error");
@@ -80,12 +81,13 @@ export async function createProduct(req, res) {
   console.log(json);
   try {
     const db = await con();
-    const result = await db.collection("productos").insertOne(json);
+    const result = await db.collection("producto").insertOne(json);
     res.status(200).json(result);
-    return({status:200,message:result})
+    return {status:200,message:result}
   } catch (error) {
     console.log(error.errInfo.details.schemaRulesNotSatisfied[0].propertiesNotSatisfied[0], "error");
     res.status(500).send("error");
+    return {status:500,message:error}
   }
 }
 

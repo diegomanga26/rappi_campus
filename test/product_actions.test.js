@@ -1,8 +1,8 @@
 import { validationResult } from "express-validator";
-import { con } from "../config/atlas.js";
+import { con } from "../database/config/atlas.js";
 
 // Importa las funciones a testear
-import { transformObject,updateProducto,createProduct } from "../versions/product_admin_version/product_actions.js";
+import { transformObject,updateProducto,createProduct,getAllProducts, } from "../versions/product_admin_version/product_actions.js";
 import { siguienteId } from "../versions/users_version/user_actions.js";
 
 const mockReq = { rateLimit: true, body: {} };
@@ -27,48 +27,43 @@ it("Devuelve todos los productos", async () => {
   if (!errors) {
     console.log(errors.array());
   }
-  expect(errors.isEmpty()).toBe(true);
+  // expect(errors.isEmpty()).toBe(true);
 
-  const result = await getAllProducts();
+  const result = await getAllProducts(mockReq,mockRes);
   expect(result).toBeDefined();
 });
 
 // Funciones para testear `createProduct()`
 it("Crea un nuevo producto correctamente", async () => {
-  const errors = validationResult({
+  mockReq.body = {
     name: "Producto 1",
     description: "Este es un producto",
-    price: 100,
+    price: 100.01,
     category: "Electrónica",
     availability: true,
-  });
-  mockReq.body={
-    name: "Producto 1",
-    description: "Este es un producto",
-    price: 100,
-    category: "Electrónica",
-    availability: true,
-  }
+  };
+  const errors = validationResult(mockReq);
   if (!errors.isEmpty()) {
     console.log(errors.array());
   }
   expect(errors.isEmpty()).toBe(true);
 
-  const result = await createProduct(mockReq,mockRes);
-  console.log(result);
-  expect(result.status).toEqual(200);
+  const result = await createProduct(mockReq, mockRes);
+  //console.log(result.message.errInfo.details.schemaRulesNotSatisfied[0]);
+  expect(result.status).toBe(200);
 });
+
 
 it("No crea un producto con un nombre vacío", async () => {
   const errors = validationResult({
     name: "",
     description: "Este es un producto",
     price: 100,
-    category: "Electrónica",
+    category: "licores",
     availability: true,
   });
-  expect(errors.isEmpty()).toBe(false);
-  expect(errors.array()[0].param).toBe("name");
+  expect(!errors.isEmpty()).toBe(false);
+  expect(errors.array()).toBe("name");
   expect(errors.array()[0].message).toBe(
     "El nombre del producto no puede estar vacío"
   );

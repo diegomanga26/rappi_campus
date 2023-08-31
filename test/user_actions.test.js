@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { con } from "../config/atlas.js";
+import { con } from "../database/config/atlas.js";
 import {
   actualizarOrden,
   actualizarUsuario,
