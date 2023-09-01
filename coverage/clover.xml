@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1693449244892" clover="3.2.0">
-  <project timestamp="1693449244892" name="All files">
-    <metrics statements="591" coveredstatements="229" conditionals="22" coveredconditionals="8" methods="19" coveredmethods="7" elements="632" coveredelements="244" complexity="0" loc="591" ncloc="591" packages="3" files="3" classes="3"/>
+<coverage generated="1693530502327" clover="3.2.0">
+  <project timestamp="1693530502328" name="All files">
+    <metrics statements="594" coveredstatements="235" conditionals="28" coveredconditionals="11" methods="19" coveredmethods="10" elements="641" coveredelements="256" complexity="0" loc="594" ncloc="594" packages="3" files="3" classes="3"/>
     <package name="database.config">
       <metrics statements="16" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
       <file name="atlas.js" path="/home/arteT01-098/Desktop/rappi_campus/database/config/atlas.js">
@@ -25,9 +25,9 @@
       </file>
     </package>
     <package name="versions.product_admin_version">
-      <metrics statements="185" coveredstatements="87" conditionals="10" coveredconditionals="3" methods="7" coveredmethods="3"/>
+      <metrics statements="188" coveredstatements="93" conditionals="16" coveredconditionals="6" methods="7" coveredmethods="6"/>
       <file name="product_actions.js" path="/home/arteT01-098/Desktop/rappi_campus/versions/product_admin_version/product_actions.js">
-        <metrics statements="185" coveredstatements="87" conditionals="10" coveredconditionals="3" methods="7" coveredmethods="3"/>
+        <metrics statements="188" coveredstatements="93" conditionals="16" coveredconditionals="6" methods="7" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -150,8 +150,8 @@
         <line num="120" count="1" type="stmt"/>
         <line num="121" count="1" type="stmt"/>
         <line num="122" count="1" type="stmt"/>
-        <line num="123" count="1" type="stmt"/>
-        <line num="124" count="0" type="stmt"/>
+        <line num="123" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="124" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="125" count="0" type="stmt"/>
         <line num="126" count="0" type="stmt"/>
         <line num="127" count="0" type="stmt"/>
@@ -168,15 +168,15 @@
         <line num="138" count="0" type="stmt"/>
         <line num="139" count="0" type="stmt"/>
         <line num="140" count="0" type="stmt"/>
-        <line num="141" count="0" type="stmt"/>
+        <line num="141" count="1" type="stmt"/>
         <line num="142" count="1" type="stmt"/>
         <line num="143" count="1" type="stmt"/>
         <line num="144" count="1" type="stmt"/>
         <line num="145" count="1" type="stmt"/>
         <line num="146" count="1" type="stmt"/>
         <line num="147" count="1" type="stmt"/>
-        <line num="148" count="1" type="stmt"/>
-        <line num="149" count="0" type="stmt"/>
+        <line num="148" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="149" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="150" count="0" type="stmt"/>
         <line num="151" count="0" type="stmt"/>
         <line num="152" count="0" type="stmt"/>
@@ -191,16 +191,16 @@
         <line num="161" count="0" type="stmt"/>
         <line num="162" count="0" type="stmt"/>
         <line num="163" count="0" type="stmt"/>
-        <line num="164" count="1" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
         <line num="165" count="1" type="stmt"/>
         <line num="166" count="1" type="stmt"/>
         <line num="167" count="1" type="stmt"/>
         <line num="168" count="1" type="stmt"/>
         <line num="169" count="1" type="stmt"/>
         <line num="170" count="1" type="stmt"/>
-        <line num="171" count="0" type="stmt"/>
-        <line num="172" count="0" type="stmt"/>
-        <line num="173" count="0" type="stmt"/>
+        <line num="171" count="1" type="stmt"/>
+        <line num="172" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="173" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="174" count="0" type="stmt"/>
         <line num="175" count="0" type="stmt"/>
         <line num="176" count="0" type="stmt"/>
@@ -213,6 +213,9 @@
         <line num="183" count="0" type="stmt"/>
         <line num="184" count="0" type="stmt"/>
         <line num="185" count="0" type="stmt"/>
+        <line num="186" count="0" type="stmt"/>
+        <line num="187" count="0" type="stmt"/>
+        <line num="188" count="1" type="stmt"/>
       </file>
     </package>
     <package name="versions.users_version">

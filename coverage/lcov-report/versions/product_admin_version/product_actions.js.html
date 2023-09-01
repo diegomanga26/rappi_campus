@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.02% </span>
+                <span class="strong">49.46% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>87/185</span>
+                <span class='fraction'>93/188</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/10</span>
+                <span class='fraction'>6/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>6/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.02% </span>
+                <span class="strong">49.46% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>87/185</span>
+                <span class='fraction'>93/188</span>
             </div>
         
             
@@ -247,7 +247,10 @@
 <a name='L182'></a><a href='#L182'>182</a>
 <a name='L183'></a><a href='#L183'>183</a>
 <a name='L184'></a><a href='#L184'>184</a>
-<a name='L185'></a><a href='#L185'>185</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -370,8 +373,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -395,6 +397,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -410,6 +414,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -431,7 +437,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Importamos el módulo "express-validator" para la validación de datos
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">// Importamos el módulo "express-validator" para la validación de datos
 import { validationResult } from "express-validator";
 // Importamos funciones necesarias de otros archivos
 import { siguienteId } from "../users_version/user_actions.js";
@@ -530,7 +536,7 @@ export async function createProduct(req, res) {
  * @param {Object} res - Objeto de respuesta.
  */
 export async function updateProducto(req, res) {
-  if (!req.rateLimit) <span class="branch-0 cbranch-no" title="branch not covered" >return;</span>
+  if (!req.rateLimit) return res.status(400)<span class="branch-0 cbranch-no" title="branch not covered" >;</span>
 <span class="cstat-no" title="statement not covered" >  const errors = validationResult(req);</span>
 <span class="cstat-no" title="statement not covered" >  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -553,8 +559,8 @@ export async function updateProducto(req, res) {
  * @param {Object} req - Objeto de solicitud.
  * @param {Object} res - Objeto de respuesta.
  */
-export <span class="fstat-no" title="function not covered" >async function deleteProducto(req, res) {</span>
-<span class="cstat-no" title="statement not covered" >  if (!req.rateLimit) return;</span>
+export async function deleteProducto(req, res) {
+  if (!req.rateLimit) <span class="branch-0 cbranch-no" title="branch not covered" >return;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  const errors = validationResult(req);</span>
 <span class="cstat-no" title="statement not covered" >  if (!errors.isEmpty())</span>
@@ -571,15 +577,15 @@ export <span class="fstat-no" title="function not covered" >async function delet
 <span class="cstat-no" title="statement not covered" >    console.log(error, "error");</span>
 <span class="cstat-no" title="statement not covered" >    res.status(500).send("error");</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;
 /**
  * Obtiene todos los productos sin una categoría específica.
  * @param {Object} req - Objeto de solicitud.
  * @param {Object} res - Objeto de respuesta.
  */
-export <span class="fstat-no" title="function not covered" >async function getAllProductsWithOutCategory(req, res) {</span>
-<span class="cstat-no" title="statement not covered" >  if (!req.rateLimit) return;</span>
+export async function getAllProductsWithOutCategory(req, res) {
+  if (!req.rateLimit) <span class="branch-0 cbranch-no" title="branch not covered" >return;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  const errors = validationResult(req);</span>
 <span class="cstat-no" title="statement not covered" >  if (!errors.isEmpty())</span>
@@ -589,19 +595,21 @@ export <span class="fstat-no" title="function not covered" >async function getAl
 <span class="cstat-no" title="statement not covered" >    const db = await con();</span>
 <span class="cstat-no" title="statement not covered" >    const result = await db.collection("productos").find({ categoria: req.params.categoria }).toArray();</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json(result);</span>
+<span class="cstat-no" title="statement not covered" >    return {status: 200, products: result}</span>
 <span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    console.log(error, "error");</span>
 <span class="cstat-no" title="statement not covered" >    res.status(500).send("error");</span>
+<span class="cstat-no" title="statement not covered" >    return {status : 500 , error}</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;
 /**
  * Obtiene todos los productos con disponibilidad.
  * @param {Object} req - Objeto de solicitud.
  * @param {Object} res - Objeto de respuesta.
  */
-export <span class="fstat-no" title="function not covered" >async function getAllProductsWithOutAviality(req, res) {</span>
-<span class="cstat-no" title="statement not covered" >  if (!req.rateLimit) return;</span>
+export async function getAllProductsWithOutAviality(req, res) {
+  if (!req.rateLimit) <span class="branch-0 cbranch-no" title="branch not covered" >return;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  const errors = validationResult(req);</span>
 <span class="cstat-no" title="statement not covered" >  if (!errors.isEmpty())</span>
@@ -611,18 +619,19 @@ export <span class="fstat-no" title="function not covered" >async function getAl
 <span class="cstat-no" title="statement not covered" >    const db = await con();</span>
 <span class="cstat-no" title="statement not covered" >    const result = await db.collection("productos").find({ disponibilidad: true }).toArray();</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json(result);</span>
+<span class="cstat-no" title="statement not covered" >    return { status : 200,results: result}</span>
 <span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    console.log(error, "error");</span>
 <span class="cstat-no" title="statement not covered" >    res.status(500).send("error");</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-31T02:34:04.876Z
+                at 2023-09-01T01:08:22.315Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -97,7 +97,7 @@ export async function createProduct(req, res) {
  * @param {Object} res - Objeto de respuesta.
  */
 export async function updateProducto(req, res) {
-  if (!req.rateLimit) return;
+  if (!req.rateLimit) return res.status(400);
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
@@ -156,9 +156,11 @@ export async function getAllProductsWithOutCategory(req, res) {
     const db = await con();
     const result = await db.collection("productos").find({ categoria: req.params.categoria }).toArray();
     res.status(200).json(result);
+    return {status: 200, products: result}
   } catch (error) {
     console.log(error, "error");
     res.status(500).send("error");
+    return {status : 500 , error}
   }
 }
 
@@ -178,6 +180,7 @@ export async function getAllProductsWithOutAviality(req, res) {
     const db = await con();
     const result = await db.collection("productos").find({ disponibilidad: true }).toArray();
     res.status(200).json(result);
+    return { status : 200,results: result}
   } catch (error) {
     console.log(error, "error");
     res.status(500).send("error");
