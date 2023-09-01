@@ -2,18 +2,18 @@ import { Router } from "express";
 import { productsDto, productsDtoUpdate } from "../storage/products.dto.js";
 import { getAllProducts, createProduct, updateProducto, deleteProducto, getAllProductsWithOutCategory, getAllProductsWithOutAviality } from "../versions/product_admin_version/product_actions.js";
 
-export const products = Router();
+export const appProducto = Router();
 
-products.get("/", getAllProducts);
+appProducto.get("/",getAllProducts);
 
-products.post('/', productsDto, createProduct)
+appProducto.post('/', productsDto, createProduct)
 
-products.put('/:id', productsDtoUpdate, updateProducto)
+appProducto.put('/:id', productsDtoUpdate, updateProducto)
 
-products.delete('/:id', deleteProducto)
+appProducto.delete('/:id', deleteProducto)
 
-products.get('/:categoria', getAllProductsWithOutCategory)
+appProducto.get('/:categoria', getAllProductsWithOutCategory)
 
-products.get('/disponibles', getAllProductsWithOutAviality)
+appProducto.get('/disponibles', getAllProductsWithOutAviality)
 
 
