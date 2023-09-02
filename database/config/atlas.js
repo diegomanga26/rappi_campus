@@ -6,7 +6,7 @@ export async function con(){
         const uri = "mongodb+srv://root:Oscar3004@cluster0.xvxpcpw.mongodb.net/rappi_prueba"
         const options = {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useUnifiedTopology: true
         };
         const client = await MongoClient.connect(uri, options);
         return client.db();
