@@ -6,7 +6,7 @@ export async function con(){
         const uri = `mongodb+srv://${process.env.atlasUser}:${process.env.atlasPassword}@cluster0.2f7rqil.mongodb.net/${process.env.atlasDb}`;
         const options = {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useUnifiedTopology: true
         };
         const client = await MongoClient.connect(uri, options);
         return client.db();
