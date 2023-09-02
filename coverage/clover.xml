@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1693531958067" clover="3.2.0">
-  <project timestamp="1693531958067" name="All files">
+<coverage generated="1693691402710" clover="3.2.0">
+  <project timestamp="1693691402710" name="All files">
     <metrics statements="597" coveredstatements="308" conditionals="45" coveredconditionals="15" methods="19" coveredmethods="11" elements="661" coveredelements="334" complexity="0" loc="597" ncloc="597" packages="3" files="3" classes="3"/>
     <package name="database.config">
       <metrics statements="16" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
-      <file name="atlas.js" path="/home/arteT01-098/Desktop/rappi_campus/database/config/atlas.js">
+      <file name="atlas.js" path="/home/skylab-120/rappi_campus/database/config/atlas.js">
         <metrics statements="16" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -26,7 +26,7 @@
     </package>
     <package name="versions.product_admin_version">
       <metrics statements="191" coveredstatements="166" conditionals="33" coveredconditionals="10" methods="7" coveredmethods="7"/>
-      <file name="product_actions.js" path="/home/arteT01-098/Desktop/rappi_campus/versions/product_admin_version/product_actions.js">
+      <file name="product_actions.js" path="/home/skylab-120/rappi_campus/versions/product_admin_version/product_actions.js">
         <metrics statements="191" coveredstatements="166" conditionals="33" coveredconditionals="10" methods="7" coveredmethods="7"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -223,7 +223,7 @@
     </package>
     <package name="versions.users_version">
       <metrics statements="390" coveredstatements="128" conditionals="10" coveredconditionals="4" methods="11" coveredmethods="3"/>
-      <file name="user_actions.js" path="/home/arteT01-098/Desktop/rappi_campus/versions/users_version/user_actions.js">
+      <file name="user_actions.js" path="/home/skylab-120/rappi_campus/versions/users_version/user_actions.js">
         <metrics statements="390" coveredstatements="128" conditionals="10" coveredconditionals="4" methods="11" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
