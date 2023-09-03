@@ -31,9 +31,12 @@ export async function registerUsuario(req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
 
+  // const { name, email, password, numCelular, address, user_type, Vehiculo = 'none' } = req.body;
   const { name, email, password, numCelular, address, user_type } = req.body;
   const id = await siguienteId("usuario");
   const newUser = { nombre: name, correo: email, contrasena: password, telefono: numCelular, direccion: address, tipo_usuario: user_type, id };
+
+  //const newUser = { nombre: name, correo: email, contrasena: password, telefono: numCelular, direccion: address, tipo_usuario: user_type,vehiculo:Vehiculo, id };
 
   try {
     const db = await con();

@@ -4,7 +4,7 @@ import { check } from "express-validator";
 export const productsDto = [
   check("name").notEmpty().isString().withMessage("name is required"), // Validación de no vacío y tipo de cadena
   check("description").notEmpty().isString().withMessage("name is required"), // Validación de no vacío y tipo de cadena
-  check("price").notEmpty().isDecimal().withMessage("price is required"), // Validación de no vacío y tipo decimal
+  check("price").notEmpty().isFloat().withMessage("price is required"), // Validación de no vacío y tipo decimal
   check("category").notEmpty().isString().withMessage("category is required"), // Validación de no vacío y tipo de cadena
   check("availability")
     .notEmpty()

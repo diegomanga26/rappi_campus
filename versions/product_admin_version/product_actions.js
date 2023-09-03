@@ -57,6 +57,7 @@ export async function getAllProducts(req, res) {
     const db = await con();
     const result = await db.collection("productos").find().toArray();
     res.status(200).json(result);
+    return {message:result, status:200}
   } catch (error) {
     console.log(error, "error");
     res.status(500).send("error");
@@ -80,11 +81,13 @@ export async function createProduct(req, res) {
   console.log(json);
   try {
     const db = await con();
-    const result = await db.collection("productos").insertOne(json);
+    const result = await db.collection("producto").insertOne(json);
     res.status(200).json(result);
+    return {status:200,message:result}
   } catch (error) {
     console.log(error.errInfo.details.schemaRulesNotSatisfied[0].propertiesNotSatisfied[0], "error");
     res.status(500).send("error");
+    return {status:500,message:error}
   }
 }
 
@@ -94,7 +97,7 @@ export async function createProduct(req, res) {
  * @param {Object} res - Objeto de respuesta.
  */
 export async function updateProducto(req, res) {
-  if (!req.rateLimit) return;
+  if (!req.rateLimit) return res.status(400);
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
@@ -106,6 +109,7 @@ export async function updateProducto(req, res) {
     const db = await con(); // Conexión a la base de datos
     const result = await db.collection("productos").updateOne(filter, { $set: json });
     res.status(200).json(result);
+    return {status : 200 , data : result}
   } catch (error) {
     console.log(error, "error");
     res.status(500).send("error");
@@ -118,7 +122,7 @@ export async function updateProducto(req, res) {
  * @param {Object} res - Objeto de respuesta.
  */
 export async function deleteProducto(req, res) {
-  if (!req.rateLimit) return;
+  if (!req.rateLimit) return {status :500};
 
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -131,9 +135,11 @@ export async function deleteProducto(req, res) {
     const db = await con();
     const result = await db.collection("productos").updateOne(filter);
     res.status(200).json(result);
+    return {status: 200, data: result}
   } catch (error) {
     console.log(error, "error");
     res.status(500).send("error");
+    return {status: 500, data: error}
   }
 }
 
@@ -143,8 +149,7 @@ export async function deleteProducto(req, res) {
  * @param {Object} res - Objeto de respuesta.
  */
 export async function getAllProductsWithOutCategory(req, res) {
-  if (!req.rateLimit) return;
-
+  if (!req.rateLimit) return {status : 500};
   const errors = validationResult(req);
   if (!errors.isEmpty())
     return res.status(400).json({ errors: errors.array() });
@@ -153,9 +158,11 @@ export async function getAllProductsWithOutCategory(req, res) {
     const db = await con();
     const result = await db.collection("productos").find({ categoria: req.params.categoria }).toArray();
     res.status(200).json(result);
+    return {status: 200, products: result}
   } catch (error) {
     console.log(error, "error");
     res.status(500).send("error");
+    return {status : 500 , error}
   }
 }
 
@@ -165,7 +172,7 @@ export async function getAllProductsWithOutCategory(req, res) {
  * @param {Object} res - Objeto de respuesta.
  */
 export async function getAllProductsWithOutAviality(req, res) {
-  if (!req.rateLimit) return;
+  if (!req.rateLimit) return {status : 500};
 
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -175,8 +182,10 @@ export async function getAllProductsWithOutAviality(req, res) {
     const db = await con();
     const result = await db.collection("productos").find({ disponibilidad: true }).toArray();
     res.status(200).json(result);
+    return { status : 200, results: 'success' };
   } catch (error) {
     console.log(error, "error");
     res.status(500).send("error");
+    return { status : 500,error:error}
   }
 }
