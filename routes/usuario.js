@@ -57,3 +57,6 @@ appUsuario.put("/cliente/pedidos/:id", orderDtoUpdate, version({
 appUsuario.post("/cliente/pedido", orderDto, version({
     "3.0.0": crearOrden,
   }));
+
+
+  export default appUsuario;

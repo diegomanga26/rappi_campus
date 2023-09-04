@@ -13,7 +13,6 @@ const version = routesVersioning();
 export const register = Router();
 
 // Creamos una instancia de enrutador para el inicio de sesión de usuarios
-export const login = Router();
 
 // Definimos una ruta POST para el registro de usuarios
 // Aquí utilizamos el DTO (Data Transfer Object) "registerDto" para validar los datos antes de ejecutar la acción
@@ -27,10 +26,5 @@ register.post(
 
 // Definimos una ruta POST para el inicio de sesión de usuarios
 // Aquí utilizamos el DTO "loginDto" para validar los datos antes de ejecutar la acción
-login.post(
-  "/",
-  loginDto,
-  version({
-    "3.0.0": loginUsuario,
-  })
-);
+
+export default register

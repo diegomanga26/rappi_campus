@@ -58,3 +58,5 @@ appProducto.get(
     "3.0.0": getAllProductsWithOutAviality,
   })
 );
+
+export default appProducto;
