@@ -294,18 +294,18 @@ export async function crearOrden(req, res) {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
+  req.body.dateTime= new Date(Date.now())
   const json = transformObject(req.body);
+  json.id= await siguienteId("orden")
 
   try {
     const db = await con();
-    const repartidores = await db.collection("usuario").find({ tipo_usuario: "repartidor" }).toArray();
-    const repartidorAleatorio = repartidores[Math.floor(Math.random() * repartidores.length)];
-    json.id_deliver = repartidorAleatorio.id;
+    const repartidores = await db.collection("rol").find({ id: 3 }).toArray();
+    console.log(repartidores);
     const result = await db.collection("orden").insertOne(json);
     res.status(201).json(result);
   } catch (error) {
-    console.error(error);
+    console.error(error.errInfo.details.schemaRulesNotSatisfied[0]);
     res.status(500).send("error");
   }
 }
