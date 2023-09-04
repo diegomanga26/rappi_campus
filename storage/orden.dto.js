@@ -1,9 +1,8 @@
 import { check } from "express-validator";
 
 export const orderDto = [
-  check("id_cart").isArray().notEmpty().withMessage("id_cart is required"),
+  check("id_cart").isInt().notEmpty().withMessage("id_cart is required"),
   check("id_user").isInt().notEmpty().withMessage("id_user is required"),
-  check("dateTime").isDate().notEmpty().withMessage("dateTime is required"),
   check("adress_to_send")
     .isString()
     .notEmpty()
