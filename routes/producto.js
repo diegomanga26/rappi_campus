@@ -47,11 +47,10 @@ appProducto.delete(
 );
 
 appProducto.get(
-  "/:categoria",
+  "/categoria/:categoria",
   version({
     "3.0.0": getAllProductsWithOutCategory,
-  }),
-  getAllProductsWithOutCategory
+  })
 );
 
 appProducto.get(
