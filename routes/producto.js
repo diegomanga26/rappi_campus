@@ -10,11 +10,12 @@ import {
   getAllProductsWithOutAviality,
 } from "../versions/product_admin_version/product_actions.js";
 import { tokenValidate } from "../middlewares/JWT.js";
+import { limitGrt } from "../middlewares/limiter.js";
 
 const version = routesVersioning();
 
 const appProducto = Router();
-appProducto.use(tokenValidate);
+appProducto.use(tokenValidate, limitGrt());
 
 appProducto.get(
   "/",

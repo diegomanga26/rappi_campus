@@ -11,10 +11,12 @@ import {
     verPedidosRealizadosUsuario,
 } from "../versions/users_version/user_actions.js";
 import { tokenValidate } from "../middlewares/JWT.js";
+import { limitGrt } from "../middlewares/limiter.js";
 
 const appUsuario = Router();
 const version = routesVersioning();
-appUsuario.use(tokenValidate);
+appUsuario.use(tokenValidate, limitGrt());
+
 
 appUsuario.get(
     "/cliente/:id",

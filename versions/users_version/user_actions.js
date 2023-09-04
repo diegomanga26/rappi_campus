@@ -57,14 +57,9 @@ export async function registerUsuario(req, res) {
   }
 }
 
-/**
- * Inicia sesión de un usuario.
- * @param {Object} req - La solicitud HTTP.
- * @param {Object} res - La respuesta HTTP.
- */
+
 export async function loginUsuario(req, res) {
   // if (!req.rateLimit) return;
-  console.log('hola');
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -198,7 +193,7 @@ export async function verPedidosRealizadosUsuario(req, res) {
     if (user.length > 0) {
       res.status(200).json({ message: "success", user: user[0] });
     } else {
-      res.status(404).json({ message: "user not found" });
+      res.status(404).json({ message: "order not found" });
     }
   } catch (error) {
     console.error(error);
