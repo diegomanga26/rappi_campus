@@ -116,11 +116,7 @@ export async function obtenerInfoUsuario(req, res) {
   }
 }
 
-/**
- * Actualiza la información de un usuario según su ID.
- * @param {Object} req - La solicitud HTTP.
- * @param {Object} res - La respuesta HTTP.
- */
+
 export async function actualizarUsuario(req, res) {
   // if (!req.rateLimit) return;
 
@@ -130,6 +126,7 @@ export async function actualizarUsuario(req, res) {
   }
 
   const json = transformObjectUser(req.body);
+  console.log(json)
   const _id = req.params.id;
   const id = parseInt(_id);
   const filter = { id };
@@ -373,8 +370,6 @@ export function transformObjectUser(inputObject) {
         transformedKey = 'direccion';
       } else if (key === 'user_type') {
         transformedKey = 'tipo_usuario';
-      } else {
-        transformedKey = key;
       }
 
       transformedObject[transformedKey] = inputObject[key];
