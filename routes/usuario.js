@@ -45,7 +45,7 @@ appUsuario.put(
     })
 );
 appUsuario.get(
-    "/cliente/pedidos/:id",
+    "/cliente/pedido/:id",
     version({
         "3.0.0": verPedidosRealizadosUsuario,
     })
@@ -53,7 +53,7 @@ appUsuario.get(
 appUsuario.get("/repartidor/entregas/:id",   version({
     "3.0.0": obtenerOrdenesPorRepartidor,
     }));
-appUsuario.put("/cliente/pedidos/:id", orderDtoUpdate, version({
+appUsuario.put("/cliente/pedido/:id", orderDtoUpdate, version({
     "3.0.0": actualizarOrden,
     }));  
 appUsuario.post("/cliente/pedido", orderDto, version({
