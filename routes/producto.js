@@ -9,10 +9,12 @@ import {
   getAllProductsWithOutCategory,
   getAllProductsWithOutAviality,
 } from "../versions/product_admin_version/product_actions.js";
+import { tokenValidate } from "../middlewares/JWT.js";
 
 const version = routesVersioning();
 
-export const appProducto = Router();
+const appProducto = Router();
+appProducto.use(tokenValidate);
 
 appProducto.get(
   "/",
@@ -58,3 +60,5 @@ appProducto.get(
     "3.0.0": getAllProductsWithOutAviality,
   })
 );
+
+export default appProducto;

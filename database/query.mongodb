@@ -62,37 +62,46 @@ db.rol.insertMany([
         id: Number(siguienteId("rol")), 
         nombre: "superAdmin", 
         permisos: {
-            versiones: ["1.0.0", "2.0.0"],
-            colecciones: ["/usuario", "/producto", "/orden", "/carrito"]
+            "/versiones": ["*"],
+            "/colecciones": ["/doorAuth","/usuario", "/producto", "/orden", "/carrito"]
         }
     },
     { 
         id: Number(siguienteId("rol")), 
         nombre: "admin", 
         permisos: {
-            versiones: ["1.0.0", "2.0.0"],
-            colecciones: ["/producto", "/orden", "/carrito"]
+            "/versiones": ["*"],
+            "/colecciones": ["/doorAuth","/usuario","/producto", "/orden", "/carrito"]
         } 
     },
     { 
         id: Number(siguienteId("rol")), 
         nombre: "repartidor", 
         permisos: {
-            versiones: ["1.0.0"],
-            colecciones: ["/orden"]
+            "/versiones": ["3.0.0"],
+            "/colecciones": ["/doorAuth","/usuario","/orden"]
         } 
     },
     { 
         id: Number(siguienteId("rol")), 
         nombre: "cliente", 
         permisos: {
-            versiones: ["1.0.0"],
-            colecciones: ["/producto", "/orden", "/carrito"]
+            "/versiones": ["3.0.0"],
+            "/colecciones": ["/doorAuth","/producto", "/orden", "/carrito"]
         } 
     }
 ]);
 
+use("rappi_prueba");
 
+function siguienteId(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+};
 db.usuario.insertMany([
     {       
         id: Number(siguienteId("usuario")), 
@@ -101,7 +110,7 @@ db.usuario.insertMany([
         telefono: "1234567891",
         correo: "usuario1@example.com",
         contrasena: "contrasena123",
-        rol: ObjectId("64eea85cbee37c9ddb1d09c0")
+        rol: ObjectId("64f60455c3ad3e97973b1970")
     },
     { 
         id: Number(siguienteId("usuario")), 
@@ -110,7 +119,7 @@ db.usuario.insertMany([
         telefono: "1234567892",
         correo: "usuario2@example.com",
         contrasena: "contrasena456",
-        rol: ObjectId("64eea85cbee37c9ddb1d09c1")
+        rol: ObjectId("64f60455c3ad3e97973b1971")
     },
     { 
         id: Number(siguienteId("usuario")), 
@@ -119,7 +128,7 @@ db.usuario.insertMany([
         telefono: "1234567893",
         correo: "usuario3@example.com",
         contrasena: "contrasena789",
-        rol: ObjectId("64eea85cbee37c9ddb1d09c2")
+        rol: ObjectId("64f60455c3ad3e97973b1972")
     },
     { 
         id: Number(siguienteId("usuario")), 
@@ -128,6 +137,6 @@ db.usuario.insertMany([
         telefono: "1234567894",
         correo: "usuario4@example.com",
         contrasena: "contrasena012",
-        rol: ObjectId("64eea85cbee37c9ddb1d09c3")
+        rol: ObjectId("64f60455c3ad3e97973b1973")
     }
 ]);

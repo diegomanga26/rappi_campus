@@ -2,19 +2,20 @@ import { con } from "../database/config/atlas.js";
 import { SignJWT, jwtVerify } from "jose";
 import dotenv from 'dotenv';
 import { ObjectId } from "mongodb";
-dotenv.config();
 
+dotenv.config();
 const connectionDb = await con();
 
 const tokenCreate = async (req, res, next) => {
     if (Object.keys(req.body).length === 0) return res.status(400).send({ message: "No data sent." });
     
     try {
-        let {rol}= req.body;
-        const result = await connectionDb.collection("rol").findOne({rol: new ObjectId(rol)});
-        console.log(result);
+        const result = await connectionDb.collection(req.query.rol).findOne(req.body);
+        const rol = result.rol;
+        const result2 = await connectionDb.collection('rol').findOne({ _id:rol });
+        const {_id, permisos} = result2;
         const encoder = new TextEncoder();
-        const jwtconstructor = await new SignJWT({ id: id.toString(), rol:new ObjectId(rol) });
+        const jwtconstructor = await new SignJWT({ _id:  new ObjectId(_id), permisos:  new Object(permisos)});
         const jwt = await jwtconstructor
             .setProtectedHeader({ alg: "HS256", typ: "JWT" })
             .setIssuedAt()
@@ -35,26 +36,28 @@ const tokenValidate = async (req, res, next) => {
         const encoder = new TextEncoder();
         const jwtData = await jwtVerify(
             authorization,
-            encoder.encode(process.env.JWT_PASSWORD)
+            encoder.encode(process.env.JWT_PRIVATE_KEY)
         );
         req.data = jwtData;
-        const tokenId = jwtData.payload.rol;
+        const tokenId = new ObjectId(jwtData.payload._id);
         const rol = await connectionDb.collection('rol').findOne({ _id: tokenId });
         const allowedEndpoints = Object.keys(rol.permisos);
-        if (!allowedEndpoints.includes(req.baseUrl)) {
-            return res.json({ status: 404, message: 'You cannot access this endpoint.' });
-        }
         
-        const allowedVersions = rol.permisos[req.baseUrl];
-        if (!allowedVersions.includes(req.headers["accept-version"])) {
-            return res.json({ status: 404, message: 'You cannot access this version.' });
+        if (!allowedEndpoints.includes("/colecciones")) {
+            if (!allowedEndpoints.includes(req.baseUrl)) {
+                return res.json({ status: 404, message: 'You cannot access this endpoint.' });
+            }
+            
+            const allowedVersions = rol.permisos[req.baseUrl];
+            if (!allowedVersions.includes(req.headers["accept-version"])) {
+                return res.json({ status: 404, message: 'You cannot access this version.' });
+            }
         }
-
         next();
     } catch (error) {
         res.status(498).json({ status: 498, message: error.message });
     }
-};
+}; 
 
 export {
     tokenCreate,
