@@ -1,7 +1,7 @@
 import { check } from "express-validator";
 
 export const orderDto = [
-  check("id_cart").isInt().notEmpty().withMessage("id_cart is required"),
+  check("cart_content").isArray().notEmpty().withMessage("cart_content is required"),
   check("id_user").isInt().notEmpty().withMessage("id_user is required"),
   check("adress_to_send")
     .isString()
@@ -17,7 +17,7 @@ export const orderDto = [
 ];
 
 export const orderDtoUpdate = [
-  check("id_cart").isArray().withMessage("id_cart is required"),
+  check("cart_content").isArray().withMessage("cart_content is required"),
   check("id_user").isInt().withMessage("id_user is required"),
   check("dateTime").isDate().withMessage("dateTime is required"),
   check("adress_to_send").isString().withMessage("adress_to_send is required"),

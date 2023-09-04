@@ -72,12 +72,13 @@ export async function loginUsuario(req, res) {
     const user = await db.collection("usuario").findOne({ correo: email, contrasena: password });
     const requestData = {
       body: {
-        correo: "usuario@hotmail.com",
-        contrasena: "contrasena012"
+        correo: req.body.email,
+        contrasena: req.body.password
       },
       query: { rol: 'usuario' }
   };
-    user.token = await tokenCreates(requestData)
+    user.token = await tokenCreates(requestData);
+
     if (user) {
       res.status(200).json({ message: "success", user });
       return {message: "success",user}
@@ -154,18 +155,11 @@ export async function verPedidosRealizadosUsuario(req, res) {
     }
 
     const db = await con();
-    const usuario_id = req.usuario_id;
+    const usuario_id = parseInt(req.params.id);
+    console.log(usuario_id);
 
     const user = await db.collection("orden").aggregate([
       { $match: { user_id: usuario_id } },
-      {
-        $lookup: {
-          from: "carrito",
-          localField: "cart_id",
-          foreignField: "id",
-          as: "cart",
-        },
-      },
       {
         $lookup: {
           from: "usuarios",
@@ -185,7 +179,7 @@ export async function verPedidosRealizadosUsuario(req, res) {
           detalles_pago: 1,
           total: 1,
           repartidor_nombre: "$repartidor.nombre",
-          cart_content: "$cart.content_cart",
+          content_cart: "$content_cart",
         },
       },
     ]).toArray();
@@ -214,17 +208,8 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
     const db = await con();
     const repartidor_id = parseInt(req.params.id);
 
-
     const ordenes = await db.collection("orden").aggregate([
       { $match: { repartidor_id: repartidor_id } },
-      {
-        $lookup: {
-          from: "carrito",
-          localField: "cart_id",
-          foreignField: "id",
-          as: "cart",
-        },
-      },
       {
         $lookup: {
           from: "usuario",
@@ -243,7 +228,7 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
           detalles_pago: 1,
           total: 1,
           repartidor_nombre: "$repartidor_id",
-          cart_content: "$cart.content_cart",
+          content_cart: "content_cart",
           usuario_nombre: "$usuario.nombre",
         },
       },
@@ -324,8 +309,8 @@ function transformObject(inputObject) {
     if (inputObject.hasOwnProperty(key)) {
       let transformedKey = key;
 
-      if (key === 'id_cart') {
-        transformedKey = 'cart_id';
+      if (key === 'cart_content') {
+        transformedKey = 'content_cart';
       } else if (key === 'id_user') {
         transformedKey = 'user_id';
       } else if (key === 'dateTime') {
