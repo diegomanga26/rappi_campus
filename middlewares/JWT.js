@@ -59,7 +59,32 @@ const tokenValidate = async (req, res, next) => {
     }
 }; 
 
+
+const tokenCreates = async (requestData) => {
+    if (Object.keys(requestData.body).length === 0) return { status: 400, message: "No data sent." };
+    
+    try {
+        const result = await connectionDb.collection(requestData.query.rol).findOne(requestData.body);
+        const rol = result.rol;
+        const result2 = await connectionDb.collection('rol').findOne({ _id: rol });
+        const { _id, permisos } = result2;
+        const encoder = new TextEncoder();
+        const jwtconstructor = await new SignJWT({ _id: new ObjectId(_id), permisos: new Object(permisos) });
+        const jwt = await jwtconstructor
+            .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+            .setIssuedAt()
+            .setExpirationTime("30m")
+            .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+        return { jwt };
+    } catch (error) {
+        return { status: 404, message: "Collection not found." };
+    }
+};
+
+// No es necesario llamar a next() ya que no estás pasando la solicitud al siguiente middleware.
+
 export {
     tokenCreate,
+    tokenCreates,
     tokenValidate
 };

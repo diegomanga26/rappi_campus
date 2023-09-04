@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator";
 import { con } from "../../database/config/atlas.js";
-import { tokenCreate } from "../../middlewares/JWT.js";
+import { tokenCreates } from "../../middlewares/JWT.js";
+
 /**
  * Obtiene el siguiente ID de una colección.
  * @param {string} coleccion - El nombre de la colección.
@@ -34,15 +35,14 @@ export async function registerUsuario(req, res) {
   // const { name, email, password, numCelular, address, user_type, Vehiculo = 'none' } = req.body;
   const { name, email, password, numCelular, address, user_type } = req.body;
   const id = await siguienteId("usuario");
-  const newUser = {
-    nombre: name,
-    correo: email,
-    contrasena: password,
-    telefono: numCelular,
-    direccion: address,
-    tipo_usuario: user_type,
-    id,
-  };
+  const newUser = { 
+    nombre: name, 
+    correo: email, 
+    contrasena: password, 
+    telefono: numCelular, 
+    direccion: address, 
+    tipo_usuario: user_type, 
+    id };
 
   //const newUser = { nombre: name, correo: email, contrasena: password, telefono: numCelular, direccion: address, tipo_usuario: user_type,vehiculo:Vehiculo, id };
 
@@ -50,7 +50,7 @@ export async function registerUsuario(req, res) {
     const db = await con();
     await db.collection("usuario").insertOne(newUser);
     res.status(201).send("success");
-    return { status: 201, message: "success" };
+    return {status : 201, message :"success"};
   } catch (error) {
     console.error(error);
     res.status(500).send("error");
@@ -64,7 +64,7 @@ export async function registerUsuario(req, res) {
  */
 export async function loginUsuario(req, res) {
   // if (!req.rateLimit) return;
-  console.log("hola");
+  console.log('hola');
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -74,28 +74,29 @@ export async function loginUsuario(req, res) {
 
   try {
     const db = await con();
-    const user = await db
-      .collection("usuario")
-      .findOne({ correo: email, contrasena: password });
-
+    const user = await db.collection("usuario").findOne({ correo: email, contrasena: password });
+    const requestData = {
+      body: {
+        correo: "usuario@hotmail.com",
+        contrasena: "contrasena012"
+      },
+      query: { rol: 'usuario' }
+  };
+    user.token = await tokenCreates(requestData)
     if (user) {
-      req.body = {
-        correo: email,
-        contrasena: password,
-      };
-      tokenCreate(req, res)
-      
-      return { message: "success", user };
+      res.status(200).json({ message: "success", user });
+      return {message: "success",user}
     } else {
       res.status(404).json({ message: "user not found" });
-      return { message: "user not found" };
+      return {message: "user not found"};
     }
   } catch (error) {
     console.error(error);
     res.status(500).send("error");
-    return { message: "error", error };
+    return {message: "error", error};
   }
 }
+
 
 export async function obtenerInfoUsuario(req, res) {
   // if (!req.rateLimit) return;
@@ -107,23 +108,22 @@ export async function obtenerInfoUsuario(req, res) {
 
   try {
     const db = await con();
-    const user = await db
-      .collection("usuario")
-      .findOne({ id: parseInt(req.params.id) });
+    const user = await db.collection("usuario").findOne({ id: parseInt(req.params.id) });
 
     if (user) {
       res.status(200).json({ message: "success", user });
-      return { message: "success", user };
+      return {message: "success",user}
     } else {
       res.status(404).json({ message: "user not found" });
-      return { message: "user not found" };
+      return {message: "user not found"};
     }
   } catch (error) {
     console.error(error);
     res.status(500).send("error");
-    return { message: "error", error };
+    return {message: "error", error};
   }
 }
+
 
 export async function actualizarUsuario(req, res) {
   // if (!req.rateLimit) return;
@@ -134,22 +134,21 @@ export async function actualizarUsuario(req, res) {
   }
 
   const json = transformObjectUser(req.body);
-  console.log(json);
+  console.log(json)
   const _id = req.params.id;
   const id = parseInt(_id);
   const filter = { id };
 
   try {
     const db = await con();
-    const result = await db
-      .collection("usuario")
-      .updateOne(filter, { $set: json });
+    const result = await db.collection("usuario").updateOne(filter, { $set: json });
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
     res.status(500).send("error");
   }
 }
+
 
 export async function verPedidosRealizadosUsuario(req, res) {
   try {
@@ -162,42 +161,39 @@ export async function verPedidosRealizadosUsuario(req, res) {
     const db = await con();
     const usuario_id = req.usuario_id;
 
-    const user = await db
-      .collection("orden")
-      .aggregate([
-        { $match: { user_id: usuario_id } },
-        {
-          $lookup: {
-            from: "carrito",
-            localField: "cart_id",
-            foreignField: "id",
-            as: "cart",
-          },
+    const user = await db.collection("orden").aggregate([
+      { $match: { user_id: usuario_id } },
+      {
+        $lookup: {
+          from: "carrito",
+          localField: "cart_id",
+          foreignField: "id",
+          as: "cart",
         },
-        {
-          $lookup: {
-            from: "usuarios",
-            localField: "repartidor_id",
-            foreignField: "id",
-            as: "repartidor",
-          },
+      },
+      {
+        $lookup: {
+          from: "usuarios",
+          localField: "repartidor_id",
+          foreignField: "id",
+          as: "repartidor",
         },
-        {
-          $project: {
-            _id: 0,
-            id: 1,
-            user_id: 1,
-            fecha_hora: 1,
-            direccion_entrega: 1,
-            estado: 1,
-            detalles_pago: 1,
-            total: 1,
-            repartidor_nombre: "$repartidor.nombre",
-            cart_content: "$cart.content_cart",
-          },
+      },
+      {
+        $project: {
+          _id: 0,
+          id: 1,
+          user_id: 1,
+          fecha_hora: 1,
+          direccion_entrega: 1,
+          estado: 1,
+          detalles_pago: 1,
+          total: 1,
+          repartidor_nombre: "$repartidor.nombre",
+          cart_content: "$cart.content_cart",
         },
-      ])
-      .toArray();
+      },
+    ]).toArray();
 
     if (user.length > 0) {
       res.status(200).json({ message: "success", user: user[0] });
@@ -209,6 +205,7 @@ export async function verPedidosRealizadosUsuario(req, res) {
     res.status(500).send("error");
   }
 }
+
 
 export async function obtenerOrdenesPorRepartidor(req, res) {
   try {
@@ -222,42 +219,39 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
     const db = await con();
     const repartidor_id = req.params.repartidor_id;
 
-    const ordenes = await db
-      .collection("orden")
-      .aggregate([
-        { $match: { repartidor_id: repartidor_id } },
-        {
-          $lookup: {
-            from: "carrito",
-            localField: "cart_id",
-            foreignField: "id",
-            as: "cart",
-          },
+    const ordenes = await db.collection("orden").aggregate([
+      { $match: { repartidor_id: repartidor_id } },
+      {
+        $lookup: {
+          from: "carrito",
+          localField: "cart_id",
+          foreignField: "id",
+          as: "cart",
         },
-        {
-          $lookup: {
-            from: "usuarios",
-            localField: "user_id",
-            foreignField: "id",
-            as: "usuario",
-          },
+      },
+      {
+        $lookup: {
+          from: "usuarios",
+          localField: "user_id",
+          foreignField: "id",
+          as: "usuario",
         },
-        {
-          $project: {
-            _id: 0,
-            id: 1,
-            fecha_hora: 1,
-            direccion_entrega: 1,
-            estado: 1,
-            detalles_pago: 1,
-            total: 1,
-            repartidor_nombre: "$repartidor_id",
-            cart_content: "$cart.content_cart",
-            usuario_nombre: "$usuario.nombre",
-          },
+      },
+      {
+        $project: {
+          _id: 0,
+          id: 1,
+          fecha_hora: 1,
+          direccion_entrega: 1,
+          estado: 1,
+          detalles_pago: 1,
+          total: 1,
+          repartidor_nombre: "$repartidor_id",
+          cart_content: "$cart.content_cart",
+          usuario_nombre: "$usuario.nombre",
         },
-      ])
-      .toArray();
+      },
+    ]).toArray();
 
     res.status(200).json({ message: "success", ordenes });
   } catch (error) {
@@ -279,6 +273,7 @@ export async function actualizarOrden(req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
 
+
   const json = transformObject(req.body);
   const _id = req.params.id;
   const id = parseInt(_id);
@@ -286,9 +281,7 @@ export async function actualizarOrden(req, res) {
 
   try {
     const db = await con();
-    const result = await db
-      .collection("usuario")
-      .updateOne(filter, { $set: json });
+    const result = await db.collection("usuario").updateOne(filter, { $set: json });
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -311,12 +304,8 @@ export async function crearOrden(req, res) {
 
   try {
     const db = await con();
-    const repartidores = await db
-      .collection("usuario")
-      .find({ tipo_usuario: "repartidor" })
-      .toArray();
-    const repartidorAleatorio =
-      repartidores[Math.floor(Math.random() * repartidores.length)];
+    const repartidores = await db.collection("usuario").find({ tipo_usuario: "repartidor" }).toArray();
+    const repartidorAleatorio = repartidores[Math.floor(Math.random() * repartidores.length)];
     json.id_deliver = repartidorAleatorio.id;
     const result = await db.collection("orden").insertOne(json);
     res.status(201).json(result);
@@ -325,6 +314,7 @@ export async function crearOrden(req, res) {
     res.status(500).send("error");
   }
 }
+
 
 /**
  * Transforma un objeto de entrada aplicando un mapeo de claves y devuelve un objeto transformado.
@@ -338,22 +328,22 @@ function transformObject(inputObject) {
     if (inputObject.hasOwnProperty(key)) {
       let transformedKey = key;
 
-      if (key === "id_cart") {
-        transformedKey = "cart_id";
-      } else if (key === "id_user") {
-        transformedKey = "user_id";
-      } else if (key === "dateTime") {
-        transformedKey = "fecha_hora";
-      } else if (key === "adress_to_send") {
-        transformedKey = "direccion_entrega";
-      } else if (key === "status") {
-        transformedKey = "estado";
-      } else if (key === "detalles_pago") {
-        transformedKey = "detalles_pago";
-      } else if (key === "total") {
-        transformedKey = "total";
-      } else if (key === "id_deliver") {
-        transformedKey = "repartidor_id";
+      if (key === 'id_cart') {
+        transformedKey = 'cart_id';
+      } else if (key === 'id_user') {
+        transformedKey = 'user_id';
+      } else if (key === 'dateTime') {
+        transformedKey = 'fecha_hora';
+      } else if (key === 'adress_to_send') {
+        transformedKey = 'direccion_entrega';
+      } else if (key === 'status') {
+        transformedKey = 'estado';
+      } else if (key === 'detalles_pago') {
+        transformedKey = 'detalles_pago';
+      } else if (key === 'total') {
+        transformedKey = 'total';
+      } else if (key === 'id_deliver') {
+        transformedKey = 'repartidor_id';
       }
 
       transformedObject[transformedKey] = inputObject[key];
@@ -376,18 +366,18 @@ export function transformObjectUser(inputObject) {
       let transformedKey;
 
       // Aplicar mapeo de claves
-      if (key === "name") {
-        transformedKey = "nombre";
-      } else if (key === "email") {
-        transformedKey = "correo";
-      } else if (key === "password") {
-        transformedKey = "contrasena";
-      } else if (key === "numCelular") {
-        transformedKey = "telefono";
-      } else if (key === "address") {
-        transformedKey = "direccion";
-      } else if (key === "user_type") {
-        transformedKey = "tipo_usuario";
+      if (key === 'name') {
+        transformedKey = 'nombre';
+      } else if (key === 'email') {
+        transformedKey = 'correo';
+      } else if (key === 'password') {
+        transformedKey = 'contrasena';
+      } else if (key === 'numCelular') {
+        transformedKey = 'telefono';
+      } else if (key === 'address') {
+        transformedKey = 'direccion';
+      } else if (key === 'user_type') {
+        transformedKey = 'tipo_usuario';
       }
 
       transformedObject[transformedKey] = inputObject[key];
