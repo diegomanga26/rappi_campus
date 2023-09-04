@@ -212,7 +212,8 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
     }
 
     const db = await con();
-    const repartidor_id = req.params.repartidor_id;
+    const repartidor_id = parseInt(req.params.id);
+
 
     const ordenes = await db.collection("orden").aggregate([
       { $match: { repartidor_id: repartidor_id } },
@@ -226,7 +227,7 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
       },
       {
         $lookup: {
-          from: "usuarios",
+          from: "usuario",
           localField: "user_id",
           foreignField: "id",
           as: "usuario",
