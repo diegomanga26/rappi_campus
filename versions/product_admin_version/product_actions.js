@@ -4,11 +4,7 @@ import { validationResult } from "express-validator";
 import { siguienteId } from "../users_version/user_actions.js";
 import { con } from "../../database/config/atlas.js";
 
-/**
- * Transforma las claves de un objeto de usuario aplicando un mapeo predefinido y devuelve un objeto transformado.
- * @param {Object} inputObject - Objeto de entrada a transformar.
- * @returns {Object} Objeto transformado.
- */
+
 export function transformObject(inputObject) {
   const transformedObject = {};
 
@@ -40,14 +36,8 @@ export function transformObject(inputObject) {
 }
 
 
-
-/**
- * Obtiene todos los productos.
- * @param {Object} req - Objeto de solicitud.
- * @param {Object} res - Objeto de respuesta.
- */
 export async function getAllProducts(req, res) {
-  if (!req.rateLimit) return;
+  // if (!req.rateLimit) return;
 
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -55,7 +45,7 @@ export async function getAllProducts(req, res) {
 
   try {
     const db = await con();
-    const result = await db.collection("productos").find().toArray();
+    const result = await db.collection("producto").find().toArray();
     res.status(200).json(result);
     return {message:result, status:200}
   } catch (error) {
@@ -64,13 +54,9 @@ export async function getAllProducts(req, res) {
   }
 }
 
-/**
- * Crea un nuevo producto.
- * @param {Object} req - Objeto de solicitud.
- * @param {Object} res - Objeto de respuesta.
- */
+
 export async function createProduct(req, res) {
-  if (!req.rateLimit) return;
+  // if (!req.rateLimit) return;
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
@@ -91,13 +77,10 @@ export async function createProduct(req, res) {
   }
 }
 
-/**
- * Actualiza un producto existente.
- * @param {Object} req - Objeto de solicitud.
- * @param {Object} res - Objeto de respuesta.
- */
+
+
 export async function updateProducto(req, res) {
-  if (!req.rateLimit) return res.status(400);
+  // if (!req.rateLimit) return res.status(400);
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
@@ -107,7 +90,7 @@ export async function updateProducto(req, res) {
   const filter = Object.assign({ id });
   try {
     const db = await con(); // Conexión a la base de datos
-    const result = await db.collection("productos").updateOne(filter, { $set: json });
+    const result = await db.collection("producto").updateOne(filter, { $set: json });
     res.status(200).json(result);
     return {status : 200 , data : result}
   } catch (error) {
@@ -116,13 +99,10 @@ export async function updateProducto(req, res) {
   }
 }
 
-/**
- * Elimina un producto existente.
- * @param {Object} req - Objeto de solicitud.
- * @param {Object} res - Objeto de respuesta.
- */
+
+
 export async function deleteProducto(req, res) {
-  if (!req.rateLimit) return {status :500};
+  // if (!req.rateLimit) return {status :500};
 
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -133,7 +113,7 @@ export async function deleteProducto(req, res) {
   const filter = Object.assign({ id });
   try {
     const db = await con();
-    const result = await db.collection("productos").updateOne(filter);
+    const result = await db.collection("producto").updateOne(filter);
     res.status(200).json(result);
     return {status: 200, data: result}
   } catch (error) {
@@ -143,20 +123,17 @@ export async function deleteProducto(req, res) {
   }
 }
 
-/**
- * Obtiene todos los productos sin una categoría específica.
- * @param {Object} req - Objeto de solicitud.
- * @param {Object} res - Objeto de respuesta.
- */
+
+
 export async function getAllProductsWithOutCategory(req, res) {
-  if (!req.rateLimit) return {status : 500};
+  // if (!req.rateLimit) return {status : 500};
   const errors = validationResult(req);
   if (!errors.isEmpty())
     return res.status(400).json({ errors: errors.array() });
 
   try {
     const db = await con();
-    const result = await db.collection("productos").find({ categoria: req.params.categoria }).toArray();
+    const result = await db.collection("producto").find({ categoria: req.params.categoria }).toArray();
     res.status(200).json(result);
     return {status: 200, products: result}
   } catch (error) {
@@ -166,13 +143,10 @@ export async function getAllProductsWithOutCategory(req, res) {
   }
 }
 
-/**
- * Obtiene todos los productos con disponibilidad.
- * @param {Object} req - Objeto de solicitud.
- * @param {Object} res - Objeto de respuesta.
- */
+
+
 export async function getAllProductsWithOutAviality(req, res) {
-  if (!req.rateLimit) return {status : 500};
+  // if (!req.rateLimit) return {status : 500};
 
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -180,7 +154,7 @@ export async function getAllProductsWithOutAviality(req, res) {
 
   try {
     const db = await con();
-    const result = await db.collection("productos").find({ disponibilidad: true }).toArray();
+    const result = await db.collection("producto").find({ disponibilidad: true }).toArray();
     res.status(200).json(result);
     return { status : 200, results: 'success' };
   } catch (error) {

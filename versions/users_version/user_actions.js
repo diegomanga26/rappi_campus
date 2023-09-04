@@ -24,7 +24,7 @@ export async function siguienteId(coleccion) {
  * @param {Object} res - La respuesta HTTP.
  */
 export async function registerUsuario(req, res) {
-  if (!req.rateLimit) return;
+  // if (!req.rateLimit) return;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -34,7 +34,14 @@ export async function registerUsuario(req, res) {
   // const { name, email, password, numCelular, address, user_type, Vehiculo = 'none' } = req.body;
   const { name, email, password, numCelular, address, user_type } = req.body;
   const id = await siguienteId("usuario");
-  const newUser = { nombre: name, correo: email, contrasena: password, telefono: numCelular, direccion: address, tipo_usuario: user_type, id };
+  const newUser = { 
+    nombre: name, 
+    correo: email, 
+    contrasena: password, 
+    telefono: numCelular, 
+    direccion: address, 
+    tipo_usuario: user_type, 
+    id };
 
   //const newUser = { nombre: name, correo: email, contrasena: password, telefono: numCelular, direccion: address, tipo_usuario: user_type,vehiculo:Vehiculo, id };
 
@@ -55,8 +62,8 @@ export async function registerUsuario(req, res) {
  * @param {Object} res - La respuesta HTTP.
  */
 export async function loginUsuario(req, res) {
-  if (!req.rateLimit) return;
-
+  // if (!req.rateLimit) return;
+  console.log('hola');
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -82,13 +89,9 @@ export async function loginUsuario(req, res) {
   }
 }
 
-/**
- * Obtiene información de un usuario según su ID.
- * @param {Object} req - La solicitud HTTP.
- * @param {Object} res - La respuesta HTTP.
- */
+
 export async function obtenerInfoUsuario(req, res) {
-  if (!req.rateLimit) return;
+  // if (!req.rateLimit) return;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -97,7 +100,7 @@ export async function obtenerInfoUsuario(req, res) {
 
   try {
     const db = await con();
-    const user = await db.collection("usuario").findOne({ id: req.params.id });
+    const user = await db.collection("usuario").findOne({ id: parseInt(req.params.id) });
 
     if (user) {
       res.status(200).json({ message: "success", user });
@@ -119,7 +122,7 @@ export async function obtenerInfoUsuario(req, res) {
  * @param {Object} res - La respuesta HTTP.
  */
 export async function actualizarUsuario(req, res) {
-  if (!req.rateLimit) return;
+  // if (!req.rateLimit) return;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -141,11 +144,7 @@ export async function actualizarUsuario(req, res) {
   }
 }
 
-/**
- * Obtiene los pedidos realizados por un usuario según su ID.
- * @param {Object} req - La solicitud HTTP.
- * @param {Object} res - La respuesta HTTP.
- */
+
 export async function verPedidosRealizadosUsuario(req, res) {
   try {
     const errors = validationResult(req);
@@ -157,7 +156,7 @@ export async function verPedidosRealizadosUsuario(req, res) {
     const db = await con();
     const usuario_id = req.usuario_id;
 
-    const user = await db.collection("ordenes").aggregate([
+    const user = await db.collection("orden").aggregate([
       { $match: { user_id: usuario_id } },
       {
         $lookup: {
@@ -202,14 +201,10 @@ export async function verPedidosRealizadosUsuario(req, res) {
   }
 }
 
-/**
- * Obtiene las órdenes asignadas a un repartidor según su ID.
- * @param {Object} req - La solicitud HTTP.
- * @param {Object} res - La respuesta HTTP.
- */
+
 export async function obtenerOrdenesPorRepartidor(req, res) {
   try {
-    if (!req.rateLimit) return;
+    // if (!req.rateLimit) return;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -219,7 +214,7 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
     const db = await con();
     const repartidor_id = req.params.repartidor_id;
 
-    const ordenes = await db.collection("ordenes").aggregate([
+    const ordenes = await db.collection("orden").aggregate([
       { $match: { repartidor_id: repartidor_id } },
       {
         $lookup: {
