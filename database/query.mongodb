@@ -34,28 +34,6 @@ function siguienteId(coleccion) {
     );
     return sequenceDocument.sequence_value;
 };
-db.carrito.insertMany([
-    {
-        id: Number(siguienteId("carrito")),
-        user_id: 1,
-        content_cart: [],
-    },
-    {
-        id: Number(siguienteId("carrito")),
-        user_id: 2,
-        content_cart: [],
-    },
-    {
-        id: Number(siguienteId("carrito")),
-        user_id: 3,
-        content_cart: [],
-    },
-    {
-        id: Number(siguienteId("carrito")),
-        user_id: 4,
-        content_cart: [],
-    }
-]);
 
 db.rol.insertMany([
     {       

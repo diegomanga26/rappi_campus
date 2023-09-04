@@ -87,13 +87,16 @@ export async function updateProducto(req, res) {
   const json = transformObject(req.body);
   const _id = req.params.id;
   let id = parseInt(_id);
+  console.log(json);
   const filter = Object.assign({ id });
+  console.log(filter);
   try {
     const db = await con(); // Conexión a la base de datos
     const result = await db.collection("producto").updateOne(filter, { $set: json });
     res.status(200).json(result);
     return {status : 200 , data : result}
   } catch (error) {
+    console.log(error.errorInfo)
     console.log(error, "error");
     res.status(500).send("error");
   }
@@ -155,6 +158,7 @@ export async function getAllProductsWithOutAviality(req, res) {
   try {
     const db = await con();
     const result = await db.collection("producto").find({ disponibilidad: true }).toArray();
+    console.log(result);
     res.status(200).json(result);
     return { status : 200, results: 'success' };
   } catch (error) {

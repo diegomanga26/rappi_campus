@@ -7,7 +7,7 @@ import rateLimit from "express-rate-limit";
  */
 export let limitGrt = () => {
     return rateLimit({
-        windowMs: 60 * 60 * 1000, // Ventana de tiempo: 1 hora
+        windowMs: 10 * 1000, // Ventana de tiempo: 1 hora
         max: 5, // Máximo 5 peticiones en la ventana de tiempo
         standardHeaders: true,
         legacyHeaders: false,

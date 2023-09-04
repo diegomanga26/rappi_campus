@@ -78,11 +78,11 @@ db.createCollection("orden", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "user_id", "cart_id", "fecha_hora", "direccion_entrega", "estado", "total", "repartidor_id"],
+            required: ["id", "user_id", "content_cart", "fecha_hora", "direccion_entrega", "estado", "total", "repartidor_id"],
             properties: {
                 _id: { bsonType: 'objectId' },
                 id: { bsonType: "int", description: "id is required" },
-                cart_id: { bsonType: "int", description: "cart_id is required" },
+                content_cart: { bsonType: "array", description: "content_cart is required" },
                 user_id: { bsonType: "int", description: "user_id is required" },
                 fecha_hora: { bsonType: "date", description: "fecha_hora is required" },
                 direccion_entrega: { bsonType: "string", description: "direccion_entrega is required" },
@@ -94,20 +94,3 @@ db.createCollection("orden", {
         }
     }
 });
-
-db.createCollection("carrito", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "user_id", "content_cart"],
-            properties: {
-                _id: { bsonType: 'objectId' },
-                id: { bsonType: "int", description: "id is required" },
-                user_id: { bsonType: "int", description: "user_id is required" },
-                content_cart: { bsonType: "array", description: "content_cart is required" }
-            }
-        }
-    }
-});
-

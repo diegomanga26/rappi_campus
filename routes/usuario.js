@@ -11,10 +11,12 @@ import {
     verPedidosRealizadosUsuario,
 } from "../versions/users_version/user_actions.js";
 import { tokenValidate } from "../middlewares/JWT.js";
+import { limitGrt } from "../middlewares/limiter.js";
 
 const appUsuario = Router();
 const version = routesVersioning();
-appUsuario.use(tokenValidate);
+appUsuario.use(tokenValidate, limitGrt());
+
 
 appUsuario.get(
     "/cliente/:id",
@@ -43,7 +45,7 @@ appUsuario.put(
     })
 );
 appUsuario.get(
-    "/cliente/pedidos/:id",
+    "/cliente/pedido/:id",
     version({
         "3.0.0": verPedidosRealizadosUsuario,
     })
@@ -51,7 +53,7 @@ appUsuario.get(
 appUsuario.get("/repartidor/entregas/:id",   version({
     "3.0.0": obtenerOrdenesPorRepartidor,
     }));
-appUsuario.put("/cliente/pedidos/:id", orderDtoUpdate, version({
+appUsuario.put("/cliente/pedido/:id", orderDtoUpdate, version({
     "3.0.0": actualizarOrden,
     }));  
 appUsuario.post("/cliente/pedido", orderDto, version({

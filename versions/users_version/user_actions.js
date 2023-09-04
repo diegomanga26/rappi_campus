@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import { con } from "../../database/config/atlas.js";
+import { tokenCreates } from "../../middlewares/JWT.js";
 
 /**
  * Obtiene el siguiente ID de una colección.
@@ -56,14 +57,9 @@ export async function registerUsuario(req, res) {
   }
 }
 
-/**
- * Inicia sesión de un usuario.
- * @param {Object} req - La solicitud HTTP.
- * @param {Object} res - La respuesta HTTP.
- */
+
 export async function loginUsuario(req, res) {
   // if (!req.rateLimit) return;
-  console.log('hola');
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -74,6 +70,14 @@ export async function loginUsuario(req, res) {
   try {
     const db = await con();
     const user = await db.collection("usuario").findOne({ correo: email, contrasena: password });
+    const requestData = {
+      body: {
+        correo: req.body.email,
+        contrasena: req.body.password
+      },
+      query: { rol: 'usuario' }
+  };
+    user.token = await tokenCreates(requestData);
 
     if (user) {
       res.status(200).json({ message: "success", user });
@@ -116,11 +120,7 @@ export async function obtenerInfoUsuario(req, res) {
   }
 }
 
-/**
- * Actualiza la información de un usuario según su ID.
- * @param {Object} req - La solicitud HTTP.
- * @param {Object} res - La respuesta HTTP.
- */
+
 export async function actualizarUsuario(req, res) {
   // if (!req.rateLimit) return;
 
@@ -130,6 +130,7 @@ export async function actualizarUsuario(req, res) {
   }
 
   const json = transformObjectUser(req.body);
+  console.log(json)
   const _id = req.params.id;
   const id = parseInt(_id);
   const filter = { id };
@@ -154,18 +155,11 @@ export async function verPedidosRealizadosUsuario(req, res) {
     }
 
     const db = await con();
-    const usuario_id = req.usuario_id;
+    const usuario_id = parseInt(req.params.id);
+    console.log(usuario_id);
 
     const user = await db.collection("orden").aggregate([
       { $match: { user_id: usuario_id } },
-      {
-        $lookup: {
-          from: "carrito",
-          localField: "cart_id",
-          foreignField: "id",
-          as: "cart",
-        },
-      },
       {
         $lookup: {
           from: "usuarios",
@@ -185,7 +179,7 @@ export async function verPedidosRealizadosUsuario(req, res) {
           detalles_pago: 1,
           total: 1,
           repartidor_nombre: "$repartidor.nombre",
-          cart_content: "$cart.content_cart",
+          content_cart: "$content_cart",
         },
       },
     ]).toArray();
@@ -193,7 +187,7 @@ export async function verPedidosRealizadosUsuario(req, res) {
     if (user.length > 0) {
       res.status(200).json({ message: "success", user: user[0] });
     } else {
-      res.status(404).json({ message: "user not found" });
+      res.status(404).json({ message: "order not found" });
     }
   } catch (error) {
     console.error(error);
@@ -212,21 +206,13 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
     }
 
     const db = await con();
-    const repartidor_id = req.params.repartidor_id;
+    const repartidor_id = parseInt(req.params.id);
 
     const ordenes = await db.collection("orden").aggregate([
       { $match: { repartidor_id: repartidor_id } },
       {
         $lookup: {
-          from: "carrito",
-          localField: "cart_id",
-          foreignField: "id",
-          as: "cart",
-        },
-      },
-      {
-        $lookup: {
-          from: "usuarios",
+          from: "usuario",
           localField: "user_id",
           foreignField: "id",
           as: "usuario",
@@ -242,7 +228,7 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
           detalles_pago: 1,
           total: 1,
           repartidor_nombre: "$repartidor_id",
-          cart_content: "$cart.content_cart",
+          content_cart: "content_cart",
           usuario_nombre: "$usuario.nombre",
         },
       },
@@ -294,18 +280,18 @@ export async function crearOrden(req, res) {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
+  req.body.dateTime= new Date(Date.now())
   const json = transformObject(req.body);
+  json.id= await siguienteId("orden")
 
   try {
     const db = await con();
-    const repartidores = await db.collection("usuario").find({ tipo_usuario: "repartidor" }).toArray();
-    const repartidorAleatorio = repartidores[Math.floor(Math.random() * repartidores.length)];
-    json.id_deliver = repartidorAleatorio.id;
+    const repartidores = await db.collection("rol").find({ id: 3 }).toArray();
+    console.log(repartidores);
     const result = await db.collection("orden").insertOne(json);
     res.status(201).json(result);
   } catch (error) {
-    console.error(error);
+    console.error(error.errInfo.details.schemaRulesNotSatisfied[0]);
     res.status(500).send("error");
   }
 }
@@ -323,8 +309,8 @@ function transformObject(inputObject) {
     if (inputObject.hasOwnProperty(key)) {
       let transformedKey = key;
 
-      if (key === 'id_cart') {
-        transformedKey = 'cart_id';
+      if (key === 'cart_content') {
+        transformedKey = 'content_cart';
       } else if (key === 'id_user') {
         transformedKey = 'user_id';
       } else if (key === 'dateTime') {
@@ -373,8 +359,6 @@ export function transformObjectUser(inputObject) {
         transformedKey = 'direccion';
       } else if (key === 'user_type') {
         transformedKey = 'tipo_usuario';
-      } else {
-        transformedKey = key;
       }
 
       transformedObject[transformedKey] = inputObject[key];

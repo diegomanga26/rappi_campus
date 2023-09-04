@@ -6,11 +6,13 @@ import {
   registerUsuario,
   loginUsuario,
 } from "../versions/users_version/user_actions.js";
+import { limitGrt } from "../middlewares/limiter.js";
 
 const version = routesVersioning();
 
 // Creamos una instancia de enrutador para el registro de usuarios
 const auth = Router();
+auth.use( limitGrt());
 
 // Creamos una instancia de enrutador para el inicio de sesión de usuarios
 // export const login = Router();
