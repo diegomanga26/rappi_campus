@@ -21,6 +21,7 @@ appProducto.get(
   "/",
   version({
     "3.0.0": getAllProducts,
+    fallbackVersion: "2.0.0",
   })
 );
 
@@ -29,6 +30,7 @@ appProducto.post(
   productsDto,
   version({
     "2.0.0": createProduct,
+    fallbackVersion: "1.0.0",
   })
 );
 
@@ -37,6 +39,7 @@ appProducto.put(
   productsDtoUpdate,
   version({
     "2.0.0": updateProducto,
+    fallbackVersion: "1.0.0",
   })
 );
 
@@ -44,6 +47,7 @@ appProducto.delete(
   "/:id",
   version({
     "1.0.0": deleteProducto,
+    fallbackVersion: "2.0.0",
   })
 );
 
@@ -51,6 +55,7 @@ appProducto.get(
   "/categoria/:categoria",
   version({
     "3.0.0": getAllProductsWithOutCategory,
+    fallbackVersion: "2.0.0",
   })
 );
 
@@ -58,6 +63,7 @@ appProducto.get(
   "/disponibles",
   version({
     "3.0.0": getAllProductsWithOutAviality,
+    fallbackVersion: "2.0.0",
   })
 );
 

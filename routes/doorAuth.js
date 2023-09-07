@@ -10,30 +10,27 @@ import { limitGrt } from "../middlewares/limiter.js";
 
 const version = routesVersioning();
 
-// Creamos una instancia de enrutador para el registro de usuarios
+
 const auth = Router();
-auth.use( limitGrt());
+auth.use(limitGrt());
 
-// Creamos una instancia de enrutador para el inicio de sesión de usuarios
-// export const login = Router();
 
-// Definimos una ruta POST para el registro de usuarios
-// Aquí utilizamos el DTO (Data Transfer Object) "registerDto" para validar los datos antes de ejecutar la acción
 auth.post(
   "/register",
   registerDto,
   version({
     "3.0.0": registerUsuario,
+    fallbackVersion: "2.0.0",
   })
 );
 
-// Definimos una ruta POST para el inicio de sesión de usuarios
-// Aquí utilizamos el DTO "loginDto" para validar los datos antes de ejecutar la acción
+
 auth.post(
   "/login",
   loginDto,
   version({
     "3.0.0": loginUsuario,
+    fallbackVersion: "2.0.0",
   })
 );
 
