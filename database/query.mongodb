@@ -36,37 +36,37 @@ function siguienteId(coleccion) {
 };
 
 db.rol.insertMany([
-    {       
-        id: Number(siguienteId("rol")), 
-        nombre: "superAdmin", 
+    {
+        id: Number(siguienteId("rol")),
+        nombre: "superAdmin",
         permisos: {
             "/versiones": ["*"],
-            "/colecciones": ["/doorAuth","/usuario", "/producto", "/orden", "/carrito"]
+            "/colecciones": ["/doorAuth", "/usuario", "/producto", "/orden", "/carrito"]
         }
     },
-    { 
-        id: Number(siguienteId("rol")), 
-        nombre: "admin", 
+    {
+        id: Number(siguienteId("rol")),
+        nombre: "admin",
         permisos: {
             "/versiones": ["*"],
-            "/colecciones": ["/doorAuth","/usuario","/producto", "/orden", "/carrito"]
-        } 
+            "/colecciones": ["/doorAuth", "/usuario", "/producto", "/orden", "/carrito"]
+        }
     },
-    { 
-        id: Number(siguienteId("rol")), 
-        nombre: "repartidor", 
+    {
+        id: Number(siguienteId("rol")),
+        nombre: "repartidor",
         permisos: {
             "/versiones": ["3.0.0"],
-            "/colecciones": ["/doorAuth","/usuario","/orden"]
-        } 
+            "/colecciones": ["/doorAuth", "/usuario", "/orden"]
+        }
     },
-    { 
-        id: Number(siguienteId("rol")), 
-        nombre: "cliente", 
+    {
+        id: Number(siguienteId("rol")),
+        nombre: "cliente",
         permisos: {
             "/versiones": ["3.0.0"],
-            "/colecciones": ["/doorAuth","/producto", "/orden", "/carrito"]
-        } 
+            "/colecciones": ["/doorAuth", "/producto", "/orden", "/carrito"]
+        }
     }
 ]);
 
@@ -81,40 +81,183 @@ function siguienteId(coleccion) {
     return sequenceDocument.sequence_value;
 };
 db.usuario.insertMany([
-    {       
-        id: Number(siguienteId("usuario")), 
+    {
+        id: Number(siguienteId("usuario")),
         nombre: "SuperRappiAdmin",
         direccion: "Dirección 1",
         telefono: "1234567891",
         correo: "usuario1@example.com",
         contrasena: "contrasena123",
-        rol: ObjectId("64f60455c3ad3e97973b1970")
+        rol: ObjectId("64f9ede25bb57e9ee64fb835")
     },
-    { 
-        id: Number(siguienteId("usuario")), 
+    {
+        id: Number(siguienteId("usuario")),
         nombre: "RappiAdmin",
         direccion: "Dirección 2",
         telefono: "1234567892",
         correo: "usuario2@example.com",
         contrasena: "contrasena456",
-        rol: ObjectId("64f60455c3ad3e97973b1971")
+        rol: ObjectId("64f9ede25bb57e9ee64fb836")
     },
-    { 
-        id: Number(siguienteId("usuario")), 
+    {
+        id: Number(siguienteId("usuario")),
         nombre: "RappiTendero",
         direccion: "Dirección 3",
         telefono: "1234567893",
         correo: "usuario3@example.com",
         contrasena: "contrasena789",
-        rol: ObjectId("64f60455c3ad3e97973b1972")
+        rol: ObjectId("64f9ede25bb57e9ee64fb837")
     },
-    { 
-        id: Number(siguienteId("usuario")), 
+    {
+        id: Number(siguienteId("usuario")),
         nombre: "RappiCliente",
         direccion: "Dirección 4",
         telefono: "1234567894",
         correo: "usuario4@example.com",
         contrasena: "contrasena012",
-        rol: ObjectId("64f60455c3ad3e97973b1973")
+        rol: ObjectId("64f9ede25bb57e9ee64fb838")
     }
 ]);
+
+
+use("rappi_prueba");
+
+function siguienteId(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+};
+db.producto.insertMany([
+
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Ron Medellín",
+        descripcion: "Ron colombiano de calidad",
+        precio: 60000,
+        categoria: "licores",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Paracetamol",
+        descripcion: "Medicamento para el dolor",
+        precio: 3500,
+        categoria: "farmacos",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Pizza Hawaiana",
+        descripcion: "Pizza con jamón y piña",
+        precio: 28000,
+        categoria: "comida_rapida",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Detergente Ariel",
+        descripcion: "Detergente líquido para ropa",
+        precio: 8000,
+        categoria: "canasta_domestica",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Aguardiente Antioqueño",
+        descripcion: "Aguardiente tradicional",
+        precio: 45000,
+        categoria: "licores",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Ibuprofeno",
+        descripcion: "Tabletas para aliviar el dolor",
+        precio: 4000,
+        categoria: "farmacos",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Hamburguesa Clásica",
+        descripcion: "Hamburguesa con carne y queso",
+        precio: 15000,
+        categoria: "comida_rapida",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Papel Higiénico Scott",
+        descripcion: "Rollo de papel higiénico suave",
+        precio: 7500,
+        categoria: "canasta_domestica",
+        disponibilidad: false
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Vino Tinto Reserva",
+        descripcion: "Vino tinto de reserva",
+        precio: 28000,
+        categoria: "licores",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Amoxicilina",
+        descripcion: "Antibiótico de amplio espectro",
+        precio: 5500,
+        categoria: "farmacos",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Sushi Variado",
+        descripcion: "Sushi fresco y variado",
+        precio: 25000,
+        categoria: "comida_rapida",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Jabón en Barra",
+        descripcion: "Jabón en barra para lavandería",
+        precio: 3000,
+        categoria: "canasta_domestica",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Tequila Reposado",
+        descripcion: "Tequila de calidad",
+        precio: 38000,
+        categoria: "licores",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Antibiótico Azitromicina",
+        descripcion: "Medicamento antibiótico",
+        precio: 7000,
+        categoria: "farmacos",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Burrito de Pollo",
+        descripcion: "Burrito con pollo y vegetales",
+        precio: 10000,
+        categoria: "comida_rapida",
+        disponibilidad: true
+    },
+    {
+        id: Number(siguienteId("producto")),
+        nombre_producto: "Toallas de Papel",
+        descripcion: "Paquete de toallas de papel",
+        precio: 4500,
+        categoria: "canasta_domestica",
+        disponibilidad: true
+    }
+])

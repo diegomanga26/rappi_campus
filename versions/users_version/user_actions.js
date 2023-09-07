@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator";
 import { con } from "../../database/config/atlas.js";
 import { tokenCreates } from "../../middlewares/JWT.js";
+import { ObjectId } from "mongodb";
 
 /**
  * Obtiene el siguiente ID de una colección.
@@ -37,11 +38,11 @@ export async function registerUsuario(req, res) {
   const id = await siguienteId("usuario");
   const newUser = { 
     nombre: name, 
+    direccion: address, 
+    telefono: numCelular, 
     correo: email, 
     contrasena: password, 
-    telefono: numCelular, 
-    direccion: address, 
-    tipo_usuario: user_type, 
+    rol: new ObjectId(user_type), 
     id };
 
   //const newUser = { nombre: name, correo: email, contrasena: password, telefono: numCelular, direccion: address, tipo_usuario: user_type,vehiculo:Vehiculo, id };
@@ -228,7 +229,7 @@ export async function obtenerOrdenesPorRepartidor(req, res) {
           detalles_pago: 1,
           total: 1,
           repartidor_nombre: "$repartidor_id",
-          content_cart: "content_cart",
+          content_cart: "$content_cart",
           usuario_nombre: "$usuario.nombre",
         },
       },

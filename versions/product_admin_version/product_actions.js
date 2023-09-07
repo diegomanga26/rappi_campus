@@ -13,7 +13,7 @@ export function transformObject(inputObject) {
       let transformedKey;
 
       if (key === 'name') {
-        transformedKey = 'nombre';
+        transformedKey = 'nombre_producto';
       } else if (key === 'email') {
         transformedKey = 'correo';
       } else if (key === 'password') {
@@ -85,18 +85,14 @@ export async function updateProducto(req, res) {
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
   const json = transformObject(req.body);
-  const _id = req.params.id;
-  let id = parseInt(_id);
+  const id = parseInt(req.params.id);
   console.log(json);
-  const filter = Object.assign({ id });
-  console.log(filter);
   try {
     const db = await con(); // Conexión a la base de datos
-    const result = await db.collection("producto").updateOne(filter, { $set: json });
+    const result = await db.collection("producto").updateOne({id: id}, { $set: json });
     res.status(200).json(result);
     return {status : 200 , data : result}
   } catch (error) {
-    console.log(error.errorInfo)
     console.log(error, "error");
     res.status(500).send("error");
   }
@@ -105,7 +101,6 @@ export async function updateProducto(req, res) {
 
 
 export async function deleteProducto(req, res) {
-  // if (!req.rateLimit) return {status :500};
 
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -116,7 +111,7 @@ export async function deleteProducto(req, res) {
   const filter = Object.assign({ id });
   try {
     const db = await con();
-    const result = await db.collection("producto").updateOne(filter);
+    const result = await db.collection("producto").deleteOne(filter);
     res.status(200).json(result);
     return {status: 200, data: result}
   } catch (error) {
@@ -158,7 +153,6 @@ export async function getAllProductsWithOutAviality(req, res) {
   try {
     const db = await con();
     const result = await db.collection("producto").find({ disponibilidad: true }).toArray();
-    console.log(result);
     res.status(200).json(result);
     return { status : 200, results: 'success' };
   } catch (error) {
