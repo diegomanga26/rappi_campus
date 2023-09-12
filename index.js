@@ -7,7 +7,7 @@ const index = express();
 
 // Inicio del servidor
 index.use(express.json());
-index.use('/', routerEnd);
+index.use('/', routerEnd)
 
 let config = JSON.parse(process.env.myServer);
 index.listen(config, () => {
